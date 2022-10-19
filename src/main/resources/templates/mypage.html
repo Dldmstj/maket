@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+<head>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/bootstrap2/assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/bootstrap2/css/styles.css" rel="stylesheet" />
+
+</head>
+
+
+<div layout:fragment="content">
+    <!-- Product section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5" style="margin:0px 100px">
+            <h2><img src="/icon/login.png" style="width:30px; height:30px; margin-right:15px">MY PAGE</h2><br>
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6">
+                    <img class="card-img-top mb-5 mb-md-0" src="/icon/profile.jpeg" style="width:450px; height:500px"/>
+                    <br><input type="file" name="profile">
+                </div>
+                <div class="col-md-6" >
+                    <!--<div class="small mb-1">.</div>-->
+                    <!--<h1 class="display-5 fw-bolder">.</h1>-->
+                    <div class="fs-5 mb-5">
+                        <!--<span class="text-decoration-line-through">$45.00</span>-->
+                        <p>이름 : </p>
+                        <p>닉네임 : </p>
+                        <p>아이디 : </p>
+                        <p>페이머니 잔액 : </p>
+                    </div>
+                    <!--<p class="lead"></p>-->
+                    <div class="d-flex">
+                        <!--<input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />-->
+                        <!--<p class="form-control text-center me-3" id="inputQuantity" style="max-width: 4rem">개수</p>-->
+                        <!--<button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <i class="bi-cart-fill me-1"></i>
+                            찜
+                        </button>-->
+                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/ymarket/paymoneycharge'">페이머니 충전</button>
+                        &nbsp; &nbsp;
+                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/ymarket/paymoneyout'">페이머니 출금</button>
+                        <!--<button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <i class="bi-cart-fill me-1"></i>
+                            채팅
+                        </button>-->
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/ymarket/updateuser'">회원 정보 수정</button>
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br><hr>
+            <div style=" height:100px;  overflow:scroll">
+                <div>
+                <h6>나의 게시물</h6>
+                </div>
+                <div style="">
+                    <ul style="list-style: none">
+                        <li>게시물 뚱땅</li>
+                        <li>게시물 뚱땅</li>
+                        <li>게시물 뚱땅</li>
+                        <li>게시물 뚱땅</li>
+                        <li>게시물 뚱땅</li>
+                        <li>게시물 뚱땅</li>
+                        <li>게시물 뚱땅</li>
+                        <li>게시물 뚱땅</li>
+                    </ul>
+                </div>
+            </div><hr>
+            <div style=" height:100px;  overflow:scroll">
+                <div>
+                    <h6>나의 찜 목록</h6>
+                </div>
+                <div>
+                    <ul style="list-style: none">
+                        <li>게시물 뚱땅</li>
+                        <li>게시물 뚱땅</li>
+                        <li>게시물 뚱땅</li>
+                        <li>게시물 뚱땅</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+</div>
+
+</body>
+</html>

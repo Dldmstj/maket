@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+<!-- 사용자 스크립트 추가 -->
+<th:block layout:fragment="script">
+  <script type="text/javascript">
+    function openPop(){
+      var charge_bank = window.open('charge_bank', '무통장입금', 'width=500px,height=600px,scrollbars=yes');
+    }
+    function openPop2(){
+      var charge_card = window.open('charge_card', '카드', 'width=500px,height=600px,scrollbars=yes');
+    }
+    function openPop3(){
+      var charge_phone = window.open('charge_phone', '휴대폰 결제', 'width=500px,height=600px,scrollbars=yes');
+    }
+  </script>
+</th:block>
+
+
+<div layout:fragment="content">
+  <div class="form">
+    <h2 style="margin:80px 300px -30px 300px;"><img src="/icon/paymoney.png" style="width:30px; height:30px; margin-right:15px">페이머니 충전</h2><br>
+    <!--<div>
+      <p>결제 방식 선택</p>
+      <div>
+        <label style="margin-right: 10px"><input type="radio" name="money" value="가상계좌">가상계좌</label>
+        <label><input type="radio" name="money" value="카드">카드</label><br>
+        <label style="margin-right: 10px"><input type="radio" name="money" value="카카오페이">카카오페이</label>
+        <label><input type="radio" name="money" value="페이코">페이코</label>
+        <label><input type="radio" name="money" value="휴대폰 결제">휴대폰 결제</label>
+      </div>
+      <div style="text-align:center" class="py-3">
+        <button type="button" class="btn btn-outline-dark" onclick="location.href='/members/new'">결제</button>
+      </div>
+    </div>-->
+      <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+          <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <!--무통장-->
+            <div class="col mb-5" style="width:200px; height:240px">
+              <div class="card h-100">
+                <!-- Product image-->
+                <img class="card-img-top" src="/icon/bank.png"/>
+                <!-- Product details-->
+                <div class="card-body p-4">
+                  <div class="text-center">
+                    <!-- Product name-
+                    <h5 class="fw-bolder">무통장 입금</h5>
+                     Product price
+                    가격-->
+                  </div>
+                </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                  <div class="text-center" style="margin-top: -20px;">
+                    <a class="btn btn-outline-dark mt-auto" onclick="openPop()" style="width:100px; height:35px">무통장 입금</a>
+                    <!--<a class="btn btn-outline-dark mt-auto" href="#">상세보기</a>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--카드-->
+            <div class="col mb-5" style="width:200px; height:240px">
+              <div class="card h-100">
+                <!-- Product image-->
+                <img class="card-img-top" src="/icon/card.png"/>
+                <!-- Product details-->
+                <div class="card-body p-4">
+                  <div class="text-center">
+                    <!-- Product name-
+                    <h5 class="fw-bolder">무통장 입금</h5>
+                     Product price
+                    가격-->
+                  </div>
+                </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                  <div class="text-center" style="margin-top: -20px;">
+                    <a class="btn btn-outline-dark mt-auto" onclick="openPop2()"  style="width:100px; height:35px">카드 결제</a>
+                    <!--<a class="btn btn-outline-dark mt-auto" href="#">상세보기</a>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--카카오페이-->
+            <div class="col mb-5" style="width:200px; height:240px">
+              <div class="card h-100">
+                <!-- Product image-->
+                <img class="card-img-top" src="/icon/kakaopay.png"/>
+                <!-- Product details-->
+                <div class="card-body p-4">
+                  <div class="text-center">
+                    <!-- Product name-
+                    <h5 class="fw-bolder">무통장 입금</h5>
+                     Product price
+                    가격-->
+                  </div>
+                </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                  <div class="text-center" style="margin-top: -20px;">
+                    <a class="btn btn-outline-dark mt-auto" onclick="location.href='/ymarket/charge_kakaopay'"  style="width:100px; height:35px">카카오페이</a>
+                    <!--<a class="btn btn-outline-dark mt-auto" href="#">상세보기</a>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--휴대폰결제-->
+            <div class="col mb-5" style="width:200px; height:240px">
+              <div class="card h-100">
+                <!-- Product image-->
+                <img class="card-img-top" src="/icon/phone.png"/>
+                <!-- Product details-->
+                <div class="card-body p-4">
+                  <div class="text-center">
+                    <!-- Product name-
+                    <h5 class="fw-bolder">무통장 입금</h5>
+                     Product price
+                    가격-->
+                  </div>
+                </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                  <div class="text-center" style="margin-top: -20px;">
+                    <a class="btn btn-outline-dark mt-auto" onclick="openPop3()" style="width:100px; height:35px">휴대폰 결제</a>
+                    <!--<a class="btn btn-outline-dark mt-auto" href="#">상세보기</a>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+        </section>
+  </div>
+
+</div>
+
+</html>

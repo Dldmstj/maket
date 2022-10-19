@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .error {
+            color: #bd2130;
+        }
+        .form{
+            margin:100px 350px;
+        }
+
+
+    </style>
+</th:block>
+
+<!--사용자 스크립트 추가-->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+    </script>
+</th:block>
+<div layout:fragment="content">
+    <div class="form">
+        <h2><img src="/icon/upload.png" style="width:30px; height:30px; margin-right:15px">Q&A 등록</h2><br>
+        <form role="form" method="post" action="">
+
+            <div class="form-group py-2">
+                <label th:for="text">질문</label>
+                <input type="text" name="noticetitle" class="form-control">
+            </div>
+            <div class="form-group py-2">
+                <label th:for="text">카테고리</label>
+                <select name="category">
+                    <option value="">질문분류</option>
+                    <option value="페이머니">페이머니</option>
+                    <option value="거래문제">거래문제</option>
+                    <option value="상품업로드">상품업로드</option>
+                    <option value="기타문의">기타문의</option>
+                </select>
+            </div>
+
+            <label>내용</label>
+            <div class="form-floating mb-3">
+                <textarea class="form-control" id="content" type="text" style="height: 10rem;" data-sb-validations="required"></textarea>
+                <label>질문 내용을 구체적으로 작성해주시면 빠른 답변이 가능합니다^_^</label>
+                <div class="invalid-feedback" data-sb-feedback="message:required">Message is required.</div>
+            </div>
+            <!--<div class="form-group py-2">
+                <label th:for="text">상세설명</label>
+
+                <textarea name="goodscontents"></textarea>
+            </div>-->
+            <div class="form-group py-2">
+                <label>사진첨부</label><br>
+                <input type="file" name="uploadfiles">
+                <input type="file" name="uploadfiles">
+                <input type="file" name="uploadfiles">
+            </div>
+            <div style="text-align:center" class="py-3">
+                <button type="submit" class="btn btn-outline-dark">업로드 하기</button>
+                <button type="button" class="btn btn-outline-dark">취소</button>
+                <!--<button type="button" class="btn btn-outline-dark">임시저장</button>-->
+
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+</html>

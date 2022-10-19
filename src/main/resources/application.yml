@@ -1,11 +1,7 @@
 server:
-  port: 8000
+  port: 8001
   servlet:
-    context-path: /market
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
+    context-path: /
 
 spring:
   mvc:

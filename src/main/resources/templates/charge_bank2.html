@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
+      layout:decorate="~{layouts/default}">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .form{
+            margin:80px;
+        }
+
+    </style>
+</th:block>
+
+<!--사용자 스크립트 추가
+<th:block layout:fragment="script">
+    <script type="text/javascript">
+        function closeTabClick() {
+            // 변수를 close해 새창을 닫음
+            .close();
+        }
+    </script>
+</th:block>-->
+
+<div layout:fragment="content">
+    <div class="form">
+        <h6><img src="/icon/bank.png" style="width:30px; height:30px; margin-right:15px">무통장 입금</h6><br>
+
+        <div>
+            <b>계좌번호 랜덤 뿡뿡</b> &nbsp; <b> 선택한 은행</b> 으로
+            <b> 입력 금액 받기</b> 원 입금 해주세요
+        </div><br><br>
+        <div style="font-size: x-small">
+            입금 후 페이머니에 반영되기까지 영업일 기준 1-2일이 소요될 수 있습니다.
+        </div>
+        <button type="button" class="btn btn-outline-dark" onclick=window.close()>완료</button>
+    </div>
+</div>
+</html>

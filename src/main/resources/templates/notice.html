@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+
+<div layout:fragment="content">
+    <br><br><main role="main" class="container">
+    <h2><img src="/icon/upload.png" style="width:30px; height:30px; margin-right:15px">공지사항</h2><br>
+    <div class="starter-template">
+
+            <table class="table table-bordered">
+                <!-- CONTENTS !-->
+                <thead>
+                <tr>
+                    <th class="col-md-1">번호</th>
+                    <th class="col-md-4">글제목</th>
+                    <th class="col-md-3">작성자</th>
+                    <th class="col-md-2">작성일</th>
+                    <th class="col-md-2">수정일</th>
+                </tr>
+                </thead>
+
+                <!--<tbody>
+                CONTENTS !
+                <tr th:each="board : ${boardList}">
+                    <td th:text="${board.id}"></td>
+                    <td><a th:href="'/board/post/'+${board.id}" th:text="${board.title}"></a></td>
+                    <td th:text="${board.writer}"></td>
+                    <td th:text="${board.createdDate} ? ${#temporals.format(board.createdDate,'yyyy-MM-dd HH:mm')} : ${board.createdDate}"></td>
+                    <td th:text="${board.modifiedDate} ? ${#temporals.format(board.modifiedDate,'yyyy-MM-dd HH:mm')} : ${board.modifiedDate}"></td>
+                </tr>
+                </tbody>-->
+
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><a onclick="location.href='/ymarket/noticeview'">뚱땅뚱</a></td>
+                    <td>박이진</td>
+                    <td>오늘</td>
+                    <td>어제</td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- Pagination -->
+            <div style="margin: 10px">
+            <span th:each="pageNum : ${pageList}" th:inline="text">
+                <a th:href="@{'/board/list/?page=' + ${pageNum}}">[[${pageNum}]]</a>
+            </span>
+                <!-- 글쓰기 버튼 -->
+                <button type="button" class="btn btn-outline-dark" onclick="location.href='/ymarket/writenotice'">글쓰기</button>
+            </div>
+
+            <!-- 검색 form -->
+            <form action="/board/search" method="GET">
+                <div style="margin-left: 100px">
+                    <input name="keyword" type="text" placeholder="검색어를 입력해주세요." style="width:400px;">
+                    <button type="button" class="btn btn-outline-dark" >검색</button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+</div>
+
+
+<!--부트스트랩 js, jquery 추가
+<script src="/js/lib/jquery.min.js"></script>
+<script src="/js/lib/bootstrap.min.js"></script>-->
+</html>

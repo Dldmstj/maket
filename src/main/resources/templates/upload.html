@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .error {
+            color: #bd2130;
+        }
+        .form{
+            margin:100px 350px;
+        }
+
+
+    </style>
+</th:block>
+
+<!--사용자 스크립트 추가-->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+    </script>
+</th:block>
+
+<div layout:fragment="content">
+    <div class="form">
+        <h2><img src="/icon/upload.png" style="width:30px; height:30px; margin-right:15px">상품등록</h2><br>
+        <form role="form" method="post" action="" th:object="${board}">
+            <div class="form-group py-2">
+                <label th:for="name">거래형태</label>
+                <div th:each="sell : ${sellTypes}" class="form-check form-check-inline">
+                    <input type="radio" th:field="*{sell}" th:value="${sell.name()}" class="form-check-input">
+                    <label th:for="${#ids.prev('sell')}" th:text="${sell.description}" class="form-check-label">
+                        val
+                    </label>
+                </div>
+            </div>
+            <div class="form-group py-2">
+                <label th:for="text">카테고리</label>
+                <select name="bank" class="form-control" th:field="*{category}">
+                    <option th:each="category : ${T(com.model.type.CategoryType).values()}" th:value="${category.name()}" th:text="${category.description}">
+                        val
+                    </option>
+                </select>
+            </div>
+            <div class="form-group py-2">
+                <label th:for="text">상품명</label>
+                <input type="text" name="goodstitle" class="form-control">
+            </div>
+            <div class="form-group py-2">
+                <label th:for="text">가격</label>
+                <input type="text" name="price" class="form-control">
+            </div>
+            <label th:for="name">상품상태</label>
+            <div th:each="state : ${stateTypes}" class="form-check form-check-inline">
+                <input type="radio" th:field="*{state}" th:value="${state.name()}" class="form-check-input">
+                <label th:for="${#ids.prev('sell')}" th:text="${state.description}" class="form-check-label">
+                    val
+                </label>
+            </div>
+            <!--<div class="form-group py-2">
+                <label th:for="text">상세설명</label>
+
+                <textarea name="goodscontents"></textarea>
+            </div>-->
+            <div class="form-group py-2">
+                <label>사진첨부</label><br>
+                <input type="file" name="uploadfiles">
+                <input type="file" name="uploadfiles">
+                <input type="file" name="uploadfiles">
+            </div>
+            <div style="text-align:center" class="py-3">
+                <button type="submit" class="btn btn-outline-dark">업로드 하기</button>
+                <button type="button" class="btn btn-outline-dark">취소</button>
+                <!--<button type="button" class="btn btn-outline-dark">임시저장</button>-->
+
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+</html>

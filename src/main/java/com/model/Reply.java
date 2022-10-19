@@ -25,12 +25,12 @@ public class Reply {
 
     @ManyToOne
     @JoinColumn(name = "boardId")
-    private Board board;        // 댓글이 달릴 게시물
+    private Board board;        // 댓글 달릴 게시물
 
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;      // 작성자
 
     @CreationTimestamp
-    private Timestamp createDate;       // 댓글 작성 시간
+    private Timestamp createDate;      // 댓글 작성 시간
 }

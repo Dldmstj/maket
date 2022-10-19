@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="header">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a href="#"><img src="/icon/logo3.jpg" style="width: 33px; padding-bottom: 2px;"></a>
+        <a class="navbar-brand" onclick="location.href='/'">Y market</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" onclick="location.href='/auth/loginForm'">login</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="location.href='/auth/joinForm'">join</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="location.href='/board/saveForm'">upload</a></li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">category</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" onclick="location.href='/ymarket/view'">의류</a></li>
+                        <!--<li><hr class="dropdown-divider" /></li>-->
+                        <li><a class="dropdown-item" onclick="location.href='/ymarket/view'">패션잡화</a></li>
+                        <li><a class="dropdown-item" onclick="location.href='/ymarket/view'">가구</a></li>
+                        <li><a class="dropdown-item" onclick="location.href='/ymarket/view'">식품</a></li>
+                        <li><a class="dropdown-item" onclick="location.href='/ymarket/view'">가전제품</a></li>
+                        <li><a class="dropdown-item" onclick="location.href='/ymarket/view'">취미/서적</a></li>
+                        <li><a class="dropdown-item" onclick="location.href='/ymarket/view'">기타</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">board</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" onclick="location.href='/ymarket/notice'">공지사항</a></li>
+                        <!--<li><hr class="dropdown-divider" /></li>-->
+                        <li><a class="dropdown-item" onclick="location.href='/ymarket/qnaboard'">Q&A</a></li>
+                        <!--<li><a class="dropdown-item" onclick="location.href='/ymarket/view'">가구</a></li>
+                        <li><a class="dropdown-item" onclick="location.href='/ymarket/view'">식품</a></li>
+                        <li><a class="dropdown-item" onclick="location.href='/ymarket/view'">가전제품</a></li>
+                        <li><a class="dropdown-item" onclick="location.href='/ymarket/view'">취미/서적</a></li>
+                        <li><a class="dropdown-item" onclick="location.href='/ymarket/view'">기타</a></li>-->
+                    </ul>
+                </li>
+            </ul>
+            <!-- 검색 form -->
+            <form action="/board/search" method="GET">
+                <div>
+                    <input name="keyword" type="text" placeholder="검색어를 입력해주세요."  style="width:230px; border:none;">
+                    <button type="button" class="btn btn-outline-dark"  style="width: 50px; height:30px; font-size: 12px;">검색</button>
+                </div>
+
+            </form> &nbsp;&nbsp;&nbsp;&nbsp;
+            <form class="d-flex">
+                <button class="btn btn-outline-dark" onclick="location.href='/ymarket/mypage'">
+                    <!--<i class="bi-cart-fill me-1"></i>-->
+                    my page
+                    <!--<span class="badge bg-dark text-white ms-1 rounded-pill">0</span>-->
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+</div>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .error {
+            color: #bd2130;
+        }
+        .form{
+            margin:100px 350px;
+        }
+
+
+    </style>
+</th:block>
+
+<!--사용자 스크립트 추가-->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+    </script>
+</th:block>
+<div layout:fragment="content">
+    <div class="form">
+        <h2><img src="/icon/upload.png" style="width:30px; height:30px; margin-right:15px">상품수정</h2><br>
+        <form role="form" method="post" action="">
+            <div class="form-group py-2">
+                <label th:for="name">거래형태</label>
+                <label><input type="radio" name="trade" value="직거래">직거래</label>
+                <label><input type="radio" name="trade" value="택배거래">택배거래</label>
+                <label><input type="radio" name="trade" value="모두가능">모두가능</label>
+            </div>
+            <div class="form-group py-2">
+                <label th:for="text">카테고리</label>
+                <select name="category">
+                    <option value="">상품분류</option>
+                    <option value="여성의류">여성의류</option>
+                    <option value="남성의류">남성의류</option>
+                    <option value="가방">가방</option>
+                    <option value="시계">시계</option>
+                    <option value="악세사리">악세사리</option>
+                    <option value="가전제품">가전제품</option>
+                    <option value="가구">가구</option>
+                    <option value="티켓">티켓</option>
+                    <option value="도서/음반">도서/음반</option>
+                    <option value="굿즈">굿즈</option>
+                    <option value="식품">식품</option>
+                    <option value="유아">유아</option>
+                    <option value="신발">신발</option>
+                    <option value="기타">기타</option>
+                </select>
+            </div>
+            <div class="form-group py-2">
+                <label th:for="text">상품명</label>
+                <input type="text" name="goodstitle" class="form-control" placeholder="상품명 받아오기">
+            </div>
+            <div class="form-group py-2">
+                <label th:for="text">가격</label>
+                <input type="text" name="price" class="form-control" placeholder="가격 받아오기">
+            </div>
+            <label>상세설명</label>
+            <div class="form-floating mb-3">
+                <textarea class="form-control" id="content" type="text" style="height: 10rem;" data-sb-validations="required"></textarea>
+                <label>goodscontent 내용 받아오기</label>
+                <div class="invalid-feedback" data-sb-feedback="message:required">Message is required.</div>
+            </div>
+            <!--<div class="form-group py-2">
+                <label th:for="text">상세설명</label>
+
+                <textarea name="goodscontents"></textarea>
+            </div>-->
+            <div class="form-group py-2">
+                <label>사진첨부</label><br>
+                <input type="file" name="uploadfiles">
+                <input type="file" name="uploadfiles">
+                <input type="file" name="uploadfiles">
+            </div>
+            <div style="text-align:center" class="py-3">
+                <button type="submit" class="btn btn-outline-dark">수정 완료</button>
+                <button type="button" class="btn btn-outline-dark">취소</button>
+                <!--<button type="button" class="btn btn-outline-dark">임시저장</button>-->
+
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+</html>

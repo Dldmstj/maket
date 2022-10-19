@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .form{
+            margin:80px;
+        }
+
+    </style>
+</th:block>
+
+<!-- 사용자 스크립트 추가
+<th:block layout:fragment="script">
+    <script type="text/javascript">
+        function openPop(){
+            var popup = window.open('/ymarket/charge_bank2', '무통장입금', 'width=500px,height=600px,scrollbars=yes');
+        }
+    </script>
+</th:block>-->
+
+<div layout:fragment="content">
+<div class="form">
+    <h6><img src="/icon/bank.png" style="width:30px; height:30px; margin-right:15px">무통장 입금</h6><br>
+    <div class="form-group py-2">
+        <label th:for="select">은행</label>
+        <select name="bank">
+            <option value="">-은행선택-</option>
+            <option value="기업은행">기업은행</option>
+            <option value="국민은행">국민은행</option>
+            <option value="농협은행">농협은행</option>
+            <option value="우리은행">우리은행</option>
+            <option value="신한은행">신한은행</option>
+            <option value="하나은행">하나은행</option>
+            <option value="SC은행">SC은행</option>
+            <option value="우체국">우체국</option>
+            <option value="카카오뱅크">카카오뱅크</option>
+            <option value="신협">신협</option>
+            <option value="부산은행">부산은행</option>
+            <option value="수협">수협</option>
+            <option value="전북은행">전북은행</option>
+            <option value="새마을금고">새마을금고</option>
+        </select>
+    </div>
+    <div class="form-group py-2">
+        <label th:for="name">입금자명</label>
+        <input type="text" name="name" class="form-control" placeholder="입금자명을 입력해주세요">
+    </div>
+    <div class="form-group py-2">
+        <label th:for="name">충전 금액</label>
+        <input type="text" name="name" class="form-control" placeholder="천원 단위로 입력해주세요">
+    </div>
+
+    <button type="button" class="btn btn-outline-dark" onclick="location.href='/ymarket/charge_bank2'">다음</button>
+
+
+</div>
+</div>
+</html>

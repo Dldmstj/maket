@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="banner">
+<style>
+    .section input[id*="slide"] {
+        display:none;
+    }
+    .section .slidewrap {
+        max-width:1200px;
+        margin:0 auto;
+        overflow:hidden;
+    }
+    .section .slidelist {
+        white-space:nowrap;
+        font-size:0;
+    }
+    .section .slidelist > li {
+        display:inline-block;
+        vertical-align:middle;
+        width:100%;
+        transition:all .5s;
+    }
+    .section .slidelist > li > a {
+        display:block;
+        position:relative;
+    }
+    .section .slidelist > li > a img {
+        z-index:2;
+        width:100%;
+    }
+    .section .slidelist label {
+        position:absolute;
+        z-index:10;
+        top:50%;
+        transform:translateY(-50%);
+        padding:50px;
+        cursor:pointer;
+    }
+
+    .section .slidelist .left{
+        left:30px;
+        background:url('../../static/banner/left.png') center center / 100% no-repeat;
+        z-index:1;
+    }
+    .section .slidelist .right{
+        right:30px;
+        background:url('../../static/banner/right.png') center center / 100% no-repeat;
+        z-index:1;
+    }
+    .section input[id="slide01"]:checked ~ .slidewrap .slidelist > li {transform:translateX(0%);}
+    .section input[id="slide02"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-100%);}
+    .section input[id="slide03"]:checked ~ .slidewrap .slidelist > li {transform:translateX(-200%);}
+
+</style>
+
+
+<body>
+
+<div class="section">
+    <input type="radio" name="slide" id="slide01" checked>
+    <input type="radio" name="slide" id="slide02">
+    <input type="radio" name="slide" id="slide03">
+
+    <div class="slidewrap">
+        <ul class="slidelist">
+            <li>
+                <a>
+                    <label for="slide03" class="left"></label>
+                    <img src="banner/banner1.png">
+                    <label for="slide02" class="right"></label>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <label for="slide01" class="left"></label>
+                    <img src="banner/banner2.png">
+                    <label for="slide03" class="right"></label>
+                </a>
+            </li>
+            <li>
+                <a>
+                    <label for="slide02" class="left"></label>
+                    <img src="banner/banner3.png">
+                    <label for="slide01" class="right"></label>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+
+</html>

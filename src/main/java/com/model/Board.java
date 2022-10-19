@@ -1,5 +1,6 @@
 package com.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.model.type.CategoryType;
 import com.model.type.SellType;
 import com.model.type.StateType;
@@ -34,7 +35,7 @@ public class Board {
     @ColumnDefault("0")
     private int count;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userId")
     private User user;
 
@@ -50,7 +51,9 @@ public class Board {
     // @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
     // private List<Picture> pic;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties({"board"})
+    @OrderBy("id desc")
     private List<Reply> reply;
 
     @CreationTimestamp
