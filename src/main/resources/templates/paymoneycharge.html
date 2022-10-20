@@ -3,135 +3,68 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
 
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+  <style>
+    .form{
+      margin-left:200px;
+    }
+
+  </style>
+</th:block>
+
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
+  <!-- jQuery -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+  <!-- iamport.payment.js -->
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+
   <script type="text/javascript">
-    function openPop(){
-      var charge_bank = window.open('charge_bank', '무통장입금', 'width=500px,height=600px,scrollbars=yes');
-    }
-    function openPop2(){
-      var charge_card = window.open('charge_card', '카드', 'width=500px,height=600px,scrollbars=yes');
-    }
-    function openPop3(){
-      var charge_phone = window.open('charge_phone', '휴대폰 결제', 'width=500px,height=600px,scrollbars=yes');
+
+    function requestPay() {
+      var IMP = window.IMP;
+      IMP.init('imp34404581'); //iamport 대신 자신의 "가맹점 식별코드"를 사용
+      IMP.request_pay({
+        pg: "html5_inicis",
+        pay_method: "card",
+        merchant_uid : 'merchant_'+new Date().getTime(),
+        name : '페이머니 충전',
+        amount : $("#charge").val(),
+        buyer_email : 'iamport@siot.do',
+        buyer_name : '구매자',
+        buyer_tel : '010-1234-5678',
+        buyer_addr : '서울특별시 강남구 삼성동',
+        buyer_postcode : '123-456'
+      }, function (rsp) { // callback
+        if (rsp.success) {
+          alert("완료 -> imp_uid : " +rsp.imp_uid+"/merchant_uid(orderKey):"+rsp.merchant_uid);
+          location.href = "mypage";
+          // 결제 성공 시 로직,
+        } else {
+          alert("실패:코드("+rsp.error_code+") /메세지("+rsp.error_msg+")");
+          // 결제 실패 시 로직,
+        }
+      });
     }
   </script>
+
 </th:block>
 
 
 <div layout:fragment="content">
-  <div class="form">
-    <h2 style="margin:80px 300px -30px 300px;"><img src="/icon/paymoney.png" style="width:30px; height:30px; margin-right:15px">페이머니 충전</h2><br>
-    <!--<div>
-      <p>결제 방식 선택</p>
-      <div>
-        <label style="margin-right: 10px"><input type="radio" name="money" value="가상계좌">가상계좌</label>
-        <label><input type="radio" name="money" value="카드">카드</label><br>
-        <label style="margin-right: 10px"><input type="radio" name="money" value="카카오페이">카카오페이</label>
-        <label><input type="radio" name="money" value="페이코">페이코</label>
-        <label><input type="radio" name="money" value="휴대폰 결제">휴대폰 결제</label>
+  <section class="py-5">
+    <div class="form">
+      <h2 style="margin:80px 300px -30px 300px;"><img src="/icon/paymoney.png" style="width:30px; height:30px; margin-right:15px">페이머니 충전</h2><br><br><br>
+      <div class="form-group py-2">
+        <label >충전 금액</label>
+        <input type="text" id="charge" class="form-control" placeholder="천원 단위로 입력해주세요" style="width:300px">
       </div>
-      <div style="text-align:center" class="py-3">
-        <button type="button" class="btn btn-outline-dark" onclick="location.href='/members/new'">결제</button>
-      </div>
-    </div>-->
-      <section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
-          <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <!--무통장-->
-            <div class="col mb-5" style="width:200px; height:240px">
-              <div class="card h-100">
-                <!-- Product image-->
-                <img class="card-img-top" src="/icon/bank.png"/>
-                <!-- Product details-->
-                <div class="card-body p-4">
-                  <div class="text-center">
-                    <!-- Product name-
-                    <h5 class="fw-bolder">무통장 입금</h5>
-                     Product price
-                    가격-->
-                  </div>
-                </div>
-                <!-- Product actions-->
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div class="text-center" style="margin-top: -20px;">
-                    <a class="btn btn-outline-dark mt-auto" onclick="openPop()" style="width:100px; height:35px">무통장 입금</a>
-                    <!--<a class="btn btn-outline-dark mt-auto" href="#">상세보기</a>-->
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--카드-->
-            <div class="col mb-5" style="width:200px; height:240px">
-              <div class="card h-100">
-                <!-- Product image-->
-                <img class="card-img-top" src="/icon/card.png"/>
-                <!-- Product details-->
-                <div class="card-body p-4">
-                  <div class="text-center">
-                    <!-- Product name-
-                    <h5 class="fw-bolder">무통장 입금</h5>
-                     Product price
-                    가격-->
-                  </div>
-                </div>
-                <!-- Product actions-->
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div class="text-center" style="margin-top: -20px;">
-                    <a class="btn btn-outline-dark mt-auto" onclick="openPop2()"  style="width:100px; height:35px">카드 결제</a>
-                    <!--<a class="btn btn-outline-dark mt-auto" href="#">상세보기</a>-->
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--카카오페이-->
-            <div class="col mb-5" style="width:200px; height:240px">
-              <div class="card h-100">
-                <!-- Product image-->
-                <img class="card-img-top" src="/icon/kakaopay.png"/>
-                <!-- Product details-->
-                <div class="card-body p-4">
-                  <div class="text-center">
-                    <!-- Product name-
-                    <h5 class="fw-bolder">무통장 입금</h5>
-                     Product price
-                    가격-->
-                  </div>
-                </div>
-                <!-- Product actions-->
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div class="text-center" style="margin-top: -20px;">
-                    <a class="btn btn-outline-dark mt-auto" onclick="location.href='/ymarket/charge_kakaopay'"  style="width:100px; height:35px">카카오페이</a>
-                    <!--<a class="btn btn-outline-dark mt-auto" href="#">상세보기</a>-->
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!--휴대폰결제-->
-            <div class="col mb-5" style="width:200px; height:240px">
-              <div class="card h-100">
-                <!-- Product image-->
-                <img class="card-img-top" src="/icon/phone.png"/>
-                <!-- Product details-->
-                <div class="card-body p-4">
-                  <div class="text-center">
-                    <!-- Product name-
-                    <h5 class="fw-bolder">무통장 입금</h5>
-                     Product price
-                    가격-->
-                  </div>
-                </div>
-                <!-- Product actions-->
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div class="text-center" style="margin-top: -20px;">
-                    <a class="btn btn-outline-dark mt-auto" onclick="openPop3()" style="width:100px; height:35px">휴대폰 결제</a>
-                    <!--<a class="btn btn-outline-dark mt-auto" href="#">상세보기</a>-->
-                  </div>
-                </div>
-              </div>
-            </div>
-        </section>
-  </div>
+
+      <button type="button" class="btn btn-outline-dark" onclick="requestPay()">다음</button>
+
+    </div>
+  </section>
 
 </div>
 

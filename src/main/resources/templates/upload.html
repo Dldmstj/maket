@@ -29,7 +29,7 @@
 <div layout:fragment="content">
     <div class="form">
         <h2><img src="/icon/upload.png" style="width:30px; height:30px; margin-right:15px">상품등록</h2><br>
-        <form role="form" method="post" action="" th:object="${board}">
+        <form role="form" method="post" action="/api/board" th:object="${board}">
             <div class="form-group py-2">
                 <label th:for="name">거래형태</label>
                 <div th:each="sell : ${sellTypes}" class="form-check form-check-inline">
@@ -48,8 +48,8 @@
                 </select>
             </div>
             <div class="form-group py-2">
-                <label th:for="text">상품명</label>
-                <input type="text" name="goodstitle" class="form-control">
+                <label th:for="text">제목</label>
+                <input type="text" name="title" class="form-control">
             </div>
             <div class="form-group py-2">
                 <label th:for="text">가격</label>
@@ -62,11 +62,11 @@
                     val
                 </label>
             </div>
-            <!--<div class="form-group py-2">
+            <div class="form-group py-2">
                 <label th:for="text">상세설명</label>
 
-                <textarea name="goodscontents"></textarea>
-            </div>-->
+                <textarea class="form-control" rows="4" name="content" placeholder="착용 횟수, 상태 등 자세하게 입력해주세요"></textarea>
+            </div>
             <div class="form-group py-2">
                 <label>사진첨부</label><br>
                 <input type="file" name="uploadfiles">
@@ -74,9 +74,9 @@
                 <input type="file" name="uploadfiles">
             </div>
             <div style="text-align:center" class="py-3">
-                <button type="submit" class="btn btn-outline-dark">업로드 하기</button>
-                <button type="button" class="btn btn-outline-dark">취소</button>
-                <!--<button type="button" class="btn btn-outline-dark">임시저장</button>-->
+                <button class="btn btn-outline-dark">업로드 하기</button>
+                <button type="button" class="btn btn-outline-dark" onclick="location.href='/'">취소</button>
+<!--                <!—<button type="button" class="btn btn-outline-dark">임시저장</button>—>-->
 
             </div>
 

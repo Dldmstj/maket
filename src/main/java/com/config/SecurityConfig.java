@@ -1,6 +1,7 @@
 package com.config;
 
 import com.config.auth.PrincipalDetailService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,13 +12,18 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 // 빈 등록 : 스프링 컨테이너에서 객체를 관리할 수 있게 하는 것
 
+@RequiredArgsConstructor
 @Configuration // 빈 등록, IoC
 @EnableWebSecurity // 시큐리티 필터 등록
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
+
+    /* 로그인 실패 핸들러 의존성 주입 */
+    private final AuthenticationFailureHandler customFailureHandler;
     @Autowired
     private PrincipalDetailService principalDetailService;
 
@@ -43,14 +49,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         http
                 .csrf().disable()  // csrf 토큰 비활성화
                 .authorizeRequests()
-                .antMatchers("/**","/th/**", "templates/**", "/auth/**", "/js/**", "/css/**", "/image/**", "/dummy/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
+                    .antMatchers("/**","/th/**", "templates/**", "/auth/**", "/js/**", "/css/**", "/image/**", "/dummy/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/auth/login")
-                .loginProcessingUrl("/auth/loginProc")
-                .defaultSuccessUrl("/");
+                    .formLogin()
+                    .loginPage("/auth/loginForm")
+                    .loginProcessingUrl("/auth/loginProc")
+                    .failureHandler(customFailureHandler)
+                    .defaultSuccessUrl("/");
     }
 }

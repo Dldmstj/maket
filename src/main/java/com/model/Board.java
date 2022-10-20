@@ -27,26 +27,29 @@ public class Board {
     private int id;     // PK, Auto_increment
 
     @Column(nullable = false, length = 100)
-    private String title;
+    private String title;       // 제목
+
+    @Column(nullable = false, length = 50)
+    private int price;       // 가격
 
     @Lob
-    private String content;
+    private String content;     // 내용
 
     @ColumnDefault("0")
-    private int count;
+    private int count;      // 조회수
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userId")
-    private User user;
+    private User user;      // user (작성자)
 
     @Enumerated(EnumType.STRING)
-    private CategoryType category;
+    private CategoryType category;      // 카테고리
 
     @Enumerated(EnumType.STRING)
-    private StateType state;
+    private StateType state;        // 제품 상태
 
     @Enumerated(EnumType.STRING)
-    private SellType sell;
+    private SellType sell;      // 거래 방식
 
     // @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
     // private List<Picture> pic;
@@ -54,8 +57,8 @@ public class Board {
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties({"board"})
     @OrderBy("id desc")
-    private List<Reply> reply;
+    private List<Reply> reply;      // 댓글
 
     @CreationTimestamp
-    private Timestamp createDate;
+    private Timestamp createDate;       // 작성일
 }

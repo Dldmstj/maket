@@ -26,11 +26,16 @@ public class UserService {
     }
 
     @Transactional
-    public void save(User user) {
-        String rawPw = user.getPw(); // pw 원문
-        String encPw = encoder.encode(rawPw); // 해쉬 변환
-        user.setPw(encPw);
-        userRepository.save(user);
+    public int userSave(User user) {
+        String rawPassword = user.getPw(); // 1234 원문
+        String encPassword = encoder.encode(rawPassword); // 해쉬
+        user.setPw(encPassword);
+        try {
+            userRepository.save(user);
+            return 1;
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     @Transactional

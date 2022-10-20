@@ -12,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
@@ -39,19 +40,19 @@ public class User {
     private String pw;      // 비밀번호
 
     @Column(nullable = false, length = 50)
-    private String phoneNum;        // 전화번호
+    private String phone;        // 전화번호
 
     @Column(nullable = false, length = 200)
     private String address;     // 주소
 
     @Column(nullable = false, length = 200)
-    private String email;     // 주소
+    private String email;     // 이메일
 
     @Enumerated(EnumType.STRING)
     private GenderType gender;      // 성별
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birth;        // 생년월일
+    @Column(nullable = false, length = 8)
+    private String birth;        // 생년월일
 
     @Enumerated(EnumType.STRING)
     private BankType bank;      // 은행
