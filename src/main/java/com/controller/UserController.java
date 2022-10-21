@@ -47,7 +47,8 @@ public class UserController {
     }
 
     @GetMapping("/auth/updateForm")
-    public String updateForm() {
+    public String updateForm(Model model) {
+        model.addAttribute("user",new User());
         return "updateuser";
     }
 

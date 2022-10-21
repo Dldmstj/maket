@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/default}">
+
+사용자 CSS 추가
+<th:block layout:fragment="css">
+    <style>
+        .form{
+            margin-left:50px;
+        }
+
+    </style>
+</th:block>
+
+<!--사용자 스크립트 추가
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        var message = "영업일 머시기";
+        function finish() {
+            alert(message);
+            location.replace("mypage");
+        };
+
+    </script>
+</th:block>-->
+
+<div layout:fragment="content">
+    <section class="py-5">
+        <div class="form">
+            <h2 ><img src="/icon/paymoney.png" style="width:30px; height:30px; margin-right:15px">페이머니 출금</h2><br><br><br>
+            <div class="form-group py-2">
+                <label >출금 금액</label>
+                <input type="text" class="form-control" placeholder="천원 단위로 입력해주세요" style="width:300px">
+
+            </div>
+            <div class="form-group py-2">
+                <label >계좌 정보 확인</label>
+                <input type="text" class="form-control" placeholder="요기에 입력햇던 은행 정보 받아와줘" style="width:300px">
+                <input type="text" class="form-control" placeholder="요기에 입력햇던 계좌 정보 받아와줘" style="width:300px">
+
+            </div>
+
+            <button type="button" class="btn btn-outline-dark" onclick="window.close()">확인</button>
+
+        </div>
+    </section>
+
+</div>
+
+</html>

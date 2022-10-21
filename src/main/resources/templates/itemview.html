@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <!-- Favicon-->
@@ -14,7 +16,7 @@
 
 <div layout:fragment="content">
 <!-- Product section-->
-<section class="py-5">
+<div class="py-5">
     <div class="container px-4 px-lg-5 my-5" style="margin:0px 100px">
         <div class="row gx-4 gx-lg-5 align-items-center">
             <div class="col-md-6">
@@ -33,6 +35,11 @@
                     지금 일부러 존나 아무말이나 치는 중이야
                 </p>
                 <div class="d-flex">
+                    <span th:if="${#session.id} == ${board.user.id}">
+                        <button id="update" class="btn btn-warning">수정</button>
+                        <button id="delete" class="btn btn-danger">삭제</button>
+                    </span>
+                </div>
                     <!--<input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />-->
                     <p class="form-control text-center me-3" id="inputQuantity" style="max-width: 4rem">개수</p>
                     <!--<button class="btn btn-outline-dark flex-shrink-0" type="button">
@@ -58,6 +65,7 @@
             <img src="/icon/profile.jpeg" style="width:450px; height:500px"/>
             <br>
         </div>
+</div>
     </div>
 </section>
 
