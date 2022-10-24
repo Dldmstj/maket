@@ -47,7 +47,17 @@ public class UserService {
     }
     @Transactional
     public int charge(int id, int payMoney) {
-        return userRepository.findById(id,payMoney);
+        return userRepository.charge(id,payMoney);
+    }
+
+    @Transactional
+    public int buy(int id, int payMoney) {
+        return userRepository.withdraw(id,payMoney);
+    }
+
+    @Transactional
+    public int sell(int id, int payMoney) {
+        return userRepository.charge(id,payMoney);
     }
 
 }

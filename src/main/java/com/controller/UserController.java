@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.config.auth.PrincipalDetail;
+import com.model.Board;
 import com.model.User;
 import com.model.type.GenderType;
 import com.service.UserService;
@@ -77,6 +78,13 @@ public class UserController {
     public String chargeForm(@AuthenticationPrincipal PrincipalDetail principalDetail, Model model){
         model.addAttribute("principal", principalDetail.getUser());
         return "paymoneycharge";
+    }
+
+    @GetMapping("")
+    public String buyForm(@AuthenticationPrincipal PrincipalDetail principalDetail, Model model, Board board) {
+        model.addAttribute("principal", principalDetail);
+        model.addAttribute("board", board);
+        return "";
     }
 
 }

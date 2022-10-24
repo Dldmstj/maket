@@ -1,6 +1,7 @@
 package com.controller.api;
 
 import com.dto.ResponseDto;
+import com.model.Board;
 import com.model.User;
 import com.model.type.GenderType;
 import com.service.UserService;
@@ -43,6 +44,14 @@ public class UserApiController {
     @PutMapping("/charge")
     public ResponseDto<Integer> charge(int id, int payMoney) { // key=value, x-www-form-urlencoded
         userService.charge(id, payMoney);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
+
+    @PutMapping("")
+    public ResponseDto<Integer> buy(Board board, int id, int payMoney) { // key=value, x-www-form-urlencoded
+        userService.sell(board.getUser().getId(), payMoney);      // 게시물작성자의 아이디
+        userService.buy(id, payMoney);      // 접속한 사람의 아이디
+        board.setSituation(1);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 

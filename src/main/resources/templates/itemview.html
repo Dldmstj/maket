@@ -47,6 +47,14 @@
                          style="width:450px; height:500px"/>
                 </div>
                 <div class="col-md-6">
+                    <span th:if="${board.situation} == 0">
+                        <div class="small mb-1">판매중</div>
+                    </span>
+
+                    <span th:if="${board.situation} == 1">
+                        <div class="small mb-1">판매완료</div>
+                    </span>
+
                     <div class="small mb-1">[[${board.user.nickname}]]</div>
                     <h1 class="display-5 fw-bolder">[[${board.title}]]</h1>
                     <div class="fs-5 mb-5">
@@ -64,8 +72,10 @@
                     </button>-->
                     <br><br><br>
                     <button type="button" class="btn btn-outline-dark">찜하기</button>
-                    &nbsp; &nbsp;
-                    <button type="button" class="btn btn-outline-dark">채팅하기</button>
+
+                    <span th:if="${board.situation} == 0">
+                        <button type="button" class="btn btn-outline-dark">구매하기</button>
+                    </span>
                     <!--<button class="btn btn-outline-dark flex-shrink-0" type="button">
                         <i class="bi-cart-fill me-1"></i>
                         채팅
@@ -95,7 +105,7 @@
                 <th:block th:each="board, status: ${boards.getContent()}">
                     <div class="col mb-5">
                         <div class="card h-100">
-                            <a th:href="'/board/' + ${board.id}">
+                            <a th:href="'/board/' + ${board.id}" style="text-decoration: none; color:black">
                                 <!-- Product image-->
                                 <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
                                      alt="..."/>
@@ -103,7 +113,7 @@
                                 <div class="card-body p-4">
                                     <div class="text-center">
                                         <!-- Product name-->
-                                        <h5 class="fw-bolder">[[${board.title}]]</h5>
+                                        <h5 style="text-decoration: none; color:black" class="fw-bolder">[[${board.title}]]</h5>
                                         <!-- Product price-->
                                         [[${#numbers.formatCurrency(board.price)}]]
                                     </div>

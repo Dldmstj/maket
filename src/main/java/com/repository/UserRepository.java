@@ -15,5 +15,10 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 
     @Modifying
     @Query("update User u set u.payMoney = u.payMoney + :payMoney where u.id = :id")
-    int findById(int id, int payMoney);
+    int charge(int id, int payMoney);       // payMoney 충전
+
+    @Modifying
+    @Query("update User u set u.payMoney = u.payMoney - :payMoney where u.id = :id")
+    int withdraw(int id, int payMoney);     // payMoney 출금
+
 }

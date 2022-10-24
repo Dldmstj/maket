@@ -26,6 +26,9 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;     // PK, Auto_increment
 
+    @ColumnDefault("0")
+    private int situation;       // 0 판매중 / 1 판매완료
+
     @Column(nullable = false, length = 100)
     private String title;       // 제목
 
