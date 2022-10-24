@@ -1,10 +1,12 @@
 package com.controller;
 
+import com.config.auth.PrincipalDetail;
 import com.model.User;
 import com.model.type.GenderType;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,15 +43,40 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("/auth/myPageForm")
-    public String myPageForm() {
+    @GetMapping("/auth/findIdForm")
+    public String findIdForm(@RequestParam(value = "error", required = false)String error,
+                            @RequestParam(value = "exception", required = false)String exception,
+                            Model model) {
+        model.addAttribute("error",error);
+        model.addAttribute("exception",exception);
+        return "findId";
+    }
+
+    @GetMapping("/auth/findid2")
+    public String findIdForm2(String name, String email, Model model) {
+        model.addAttribute("user", userService.findId(name, email));        // user
+        return "findid2";
+    }
+
+    @GetMapping("/myPageForm")
+    public String myPageForm(Model model, @AuthenticationPrincipal PrincipalDetail principalDetail) {
+        if (principalDetail != null) {
+            model.addAttribute("principal",principalDetail.getUser());
+        }
         return "mypage";
     }
 
     @GetMapping("/auth/updateForm")
-    public String updateForm(Model model) {
-        model.addAttribute("user",new User());
+    public String updateForm(@AuthenticationPrincipal PrincipalDetail principalDetail, Model model) {
+        model.addAttribute("principal", principalDetail.getUser());
+//        model.addAttribute("user",new User());
         return "updateuser";
+    }
+
+    @GetMapping("/chareForm")
+    public String chargeForm(@AuthenticationPrincipal PrincipalDetail principalDetail, Model model){
+        model.addAttribute("principal", principalDetail.getUser());
+        return "paymoneycharge";
     }
 
 }

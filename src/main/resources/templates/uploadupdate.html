@@ -11,62 +11,93 @@
         .error {
             color: #bd2130;
         }
-        .form{
-            margin:100px 350px;
+
+        .form {
+            margin: 100px 350px;
         }
 
 
     </style>
 </th:block>
 
-<!--사용자 스크립트 추가-->
 <th:block layout:fragment="script">
-    <script th:inline="javascript">
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
 
+        function update() {
+            let id = $("#id").val();
+
+            let data = {
+                sell: $("#sell").val(),
+                category: $("#category").val(),
+                title: $("#title").val(),
+                price: $("#price").val(),
+                state: $("#state").val(),
+                content: $("#content").val(),
+                boardImg: $("#boardImg").val()
+            };
+
+            $.ajax({
+                type: "PUT",
+                url: "/api/board/" + id,
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).done(function (resp) {
+                alert("게시물 수정이 완료되었습니다.");
+                //console.log(resp);
+                location.href = "/api/board/" + id;
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        }
     </script>
+
 </th:block>
+
 <div layout:fragment="content">
+    <input type="hidden" id="board" th:value="${principal}">
     <div class="form">
         <h2><img src="/icon/upload.png" style="width:30px; height:30px; margin-right:15px">상품수정</h2><br>
-        <form role="form" method="post" action="">
+        <form role="form" method="post" th:action="'/api/board/'+${board.id}" th:object="${board}">
+            <input type="hidden" name="_method" value="put">
+            <input type="hidden" id="id" th:value="${board.id}"/>
             <div class="form-group py-2">
                 <label th:for="name">거래형태</label>
-                <label><input type="radio" name="trade" value="직거래">직거래</label>
-                <label><input type="radio" name="trade" value="택배거래">택배거래</label>
-                <label><input type="radio" name="trade" value="모두가능">모두가능</label>
+                <div th:each="sell : ${sellTypes}" id="sell" class="form-check form-check-inline">
+                    <input type="radio" th:field="${board.sell}" th:value="${sell.name()}" class="form-check-input">
+                    <label th:for="sell" th:text="${sell.description}" class="form-check-label">
+                        val
+                    </label>
+                </div>
             </div>
             <div class="form-group py-2">
                 <label th:for="text">카테고리</label>
-                <select name="category">
-                    <option value="">상품분류</option>
-                    <option value="여성의류">여성의류</option>
-                    <option value="남성의류">남성의류</option>
-                    <option value="가방">가방</option>
-                    <option value="시계">시계</option>
-                    <option value="악세사리">악세사리</option>
-                    <option value="가전제품">가전제품</option>
-                    <option value="가구">가구</option>
-                    <option value="티켓">티켓</option>
-                    <option value="도서/음반">도서/음반</option>
-                    <option value="굿즈">굿즈</option>
-                    <option value="식품">식품</option>
-                    <option value="유아">유아</option>
-                    <option value="신발">신발</option>
-                    <option value="기타">기타</option>
+                <select id="category" class="form-control" th:field="${board.category}">
+                    <option th:each="category : ${T(com.model.type.CategoryType).values()}"
+                            th:value="${category.name()}" th:text="${category.description}">
+                    </option>
                 </select>
             </div>
             <div class="form-group py-2">
-                <label th:for="text">상품명</label>
-                <input type="text" name="goodstitle" class="form-control" placeholder="상품명 받아오기">
+                <label th:for="text">제목</label>
+                <input type="text" id="title" name="title" class="form-control" placeholder="Enter title">
             </div>
             <div class="form-group py-2">
                 <label th:for="text">가격</label>
-                <input type="text" name="price" class="form-control" placeholder="가격 받아오기">
+                <input type="text" id="price" name="price" class="form-control" placeholder="Enter price">
+            </div>
+            <label th:for="name">상품상태</label>
+            <div th:each="state : ${stateTypes}" id="state" class="form-check form-check-inline">
+                <input type="radio" th:field="${board.state}" th:value="${state.name()}" class="form-check-input">
+                <label th:for="state" th:text="${state.description}" class="form-check-label">
+                    val
+                </label>
             </div>
             <label>상세설명</label>
             <div class="form-floating mb-3">
-                <textarea class="form-control" id="content" type="text" style="height: 10rem;" data-sb-validations="required"></textarea>
-                <label>goodscontent 내용 받아오기</label>
+                <textarea class="form-control" id="content" style="height: 10rem;"  name="" data-sb-validations="required">[[${board.content}]]</textarea>
                 <div class="invalid-feedback" data-sb-feedback="message:required">Message is required.</div>
             </div>
             <!--<div class="form-group py-2">
@@ -74,15 +105,19 @@
 
                 <textarea name="goodscontents"></textarea>
             </div>-->
-            <div class="form-group py-2">
-                <label>사진첨부</label><br>
-                <input type="file" name="uploadfiles">
-                <input type="file" name="uploadfiles">
-                <input type="file" name="uploadfiles">
+            <div th:if="${not #lists.isEmpty(board.boardImg)}">
+                <div class="form-group" id="boardImg" th:each="boardImg, status: ${board.boardImg}">
+                    <div class="custom-file img-div">
+                        <input type="file" class="custom-file-input" name="boardImgFile">
+                        <input type="hidden" name="itemImgIds" th:value="${boardImg.id}">
+                        <label class="custom-file-label"
+                               th:text="${not #strings.isEmpty(boardImg.oriImgName)} ? ${boardImg.oriImgName} : '상품이미지' + ${status.index+1}"></label>
+                    </div>
+                </div>
             </div>
             <div style="text-align:center" class="py-3">
-                <button type="submit" class="btn btn-outline-dark">수정 완료</button>
-                <button type="button" class="btn btn-outline-dark">취소</button>
+                <button class="btn btn-outline-dark" onclick="update()">수정 완료</button>
+                <button type="button" class="btn btn-outline-dark" onclick="history.back()">취소</button>
                 <!--<button type="button" class="btn btn-outline-dark">임시저장</button>-->
 
             </div>

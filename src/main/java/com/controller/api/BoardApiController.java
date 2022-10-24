@@ -4,16 +4,15 @@ import com.config.auth.PrincipalDetail;
 import com.dto.ReplySaveRequestDto;
 import com.dto.ResponseDto;
 import com.model.Board;
+import com.model.BoardImg;
 import com.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 public class BoardApiController {
@@ -22,35 +21,37 @@ public class BoardApiController {
     private BoardService boardService;
 
     @PostMapping("/api/board")
-    public ResponseDto<Integer> save(Board board, @AuthenticationPrincipal PrincipalDetail principal) {
-        boardService.upload(board, principal.getUser());
+    public ResponseDto<Integer> save(Board board, @AuthenticationPrincipal PrincipalDetail principal,
+                                     @RequestParam("boardImgFile")List<MultipartFile> boardImgList) {
+        try {
+            boardService.upload(board, principal.getUser(),boardImgList);
+        } catch (Exception e) {
+            return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+        }
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
     @DeleteMapping("/api/board/{id}")
     public ResponseDto<Integer> deleteById(@PathVariable int id){
-        boardService.글삭제하기(id);
+        boardService.boardDelete(id);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
     @PutMapping("/api/board/{id}")
-    public ResponseDto<Integer> update(@PathVariable int id, @RequestBody Board board){
-        System.out.println("BoardApiController : update : id : "+id);
-        System.out.println("BoardApiController : update : board : "+board.getTitle());
-        System.out.println("BoardApiController : update : board : "+board.getContent());
-        boardService.글수정하기(id, board);
+    public ResponseDto<Integer> update(@PathVariable int id, Board board){
+        boardService.update(id, board);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
     @PostMapping("/api/board/{boardId}/reply")
-    public ResponseDto<Integer> replySave(@RequestBody ReplySaveRequestDto replySaveRequestDto) {
-        boardService.댓글쓰기(replySaveRequestDto);
+    public ResponseDto<Integer> replySave(ReplySaveRequestDto replySaveRequestDto) {
+        boardService.replySave(replySaveRequestDto);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
     @DeleteMapping("/api/board/{boardId}/reply/{replyId}")
     public ResponseDto<Integer> replyDelete(@PathVariable int replyId) {
-        boardService.댓글삭제(replyId);
+        boardService.replyDelete(replyId);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 }

@@ -5,227 +5,159 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<th:block layout:fragment="script">
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+
+        function deleteById() {
+            let id = $("#id").val();
+
+            $.ajax({
+                type: "DELETE",
+                url: "/api/board/"+id,
+                dataType: "json"
+            }).done(function(resp){
+                alert("삭제가 완료되었습니다.");
+                location.href = "/";
+            }).fail(function(error){
+                alert(JSON.stringify(error));
+            });
+        }
+    </script>
+
+</th:block>
+
 <head>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="/bootstrap2/assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/bootstrap2/assets/favicon.ico"/>
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="/bootstrap2/css/styles.css" rel="stylesheet" />
+    <link href="/bootstrap2/css/styles.css" rel="stylesheet"/>
 
 </head>
 
-
 <div layout:fragment="content">
-<!-- Product section-->
-<div class="py-5">
-    <div class="container px-4 px-lg-5 my-5" style="margin:0px 100px">
-        <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6">
-                <img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." style="width:450px; height:500px"/>
-            </div>
-            <div class="col-md-6" >
-                <div class="small mb-1">판매자 아이디</div>
-                <h1 class="display-5 fw-bolder">상품 이름</h1>
-                <div class="fs-5 mb-5">
-                    <!--<span class="text-decoration-line-through">$45.00</span>-->
-                    <span>가격</span>
+    <input type="hidden" id="board" th:value="${board.id}">
+    <!-- Product section-->
+    <div class="py-5">
+        <div class="container px-4 px-lg-5 my-5" style="margin:0px 100px">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="mainImg col-md-6">
+                    <img th:src="${board.boardImg[0].imgUrl}" class="card-img-top mb-5 mb-md-0" th:alt="${board.title}"
+                         style="width:450px; height:500px"/>
                 </div>
-                <p class="lead">상세 설명 블라블라블랑ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
-                    졸작 존나 하기 싫다 시발 내가 지금 새벽 4시 40분인데 이 지랄을 하고 있네 시발 언니도 힘들지 나도 힘드러
-                    난 오늘 언제 잘까 이렇게 많이 써놔야 나중에 상세설명이 많을 때 어떻게 나올지 확인 할 수 있어서
-                    지금 일부러 존나 아무말이나 치는 중이야
-                </p>
-                <div class="d-flex">
-                    <span th:if="${#session.id} == ${board.user.id}">
-                        <button id="update" class="btn btn-warning">수정</button>
-                        <button id="delete" class="btn btn-danger">삭제</button>
-                    </span>
-                </div>
+                <div class="col-md-6">
+                    <div class="small mb-1">[[${board.user.nickname}]]</div>
+                    <h1 class="display-5 fw-bolder">[[${board.title}]]</h1>
+                    <div class="fs-5 mb-5">
+                        <!--<span class="text-decoration-line-through">$45.00</span>-->
+                        <span>[[${board.price}]] 원</span>
+                    </div>
+                    <p class="lead" th:text="${board.content}"></p>
+                    <div class="d-flex">
+                    </div>
                     <!--<input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />-->
-                    <p class="form-control text-center me-3" id="inputQuantity" style="max-width: 4rem">개수</p>
+                    <!--<p class="form-control text-center me-3" id="inputQuantity" style="max-width: 4rem">개수</p>-->
                     <!--<button class="btn btn-outline-dark flex-shrink-0" type="button">
                         <i class="bi-cart-fill me-1"></i>
                         찜
                     </button>-->
-                    <button type="button" class="btn btn-outline-dark" >찜하기</button>
+                    <br><br><br>
+                    <button type="button" class="btn btn-outline-dark">찜하기</button>
                     &nbsp; &nbsp;
                     <button type="button" class="btn btn-outline-dark">채팅하기</button>
                     <!--<button class="btn btn-outline-dark flex-shrink-0" type="button">
                         <i class="bi-cart-fill me-1"></i>
                         채팅
                     </button>-->
+                    <br><br>
+                    <span th:if="${principal} == ${board.user}">
+                        <button type="button" th:href="'/board/'+${board.id}+'/updateForm'" class="btn btn-warning">수정</button>
+                        <button type="button" id="btn-delete" onclick="deleteById()" class="btn btn-danger">삭제</button>
+                    </span>
                 </div>
             </div>
         </div>
-        <br><br><br><br><hr><br><br>
-        <div style="text-align: center">
-            <img src="/icon/profile.jpeg" style="width:450px; height:500px"/>
-            <br><br>
-            <img src="/icon/profile.jpeg" style="width:450px; height:500px"/>
-            <br><br>
-            <img src="/icon/profile.jpeg" style="width:450px; height:500px"/>
-            <br>
-        </div>
-</div>
-    </div>
-</section>
-
-<!-- Related items section-->
-<section class="py-5 bg-light">
-    <div class="container px-4 px-lg-5 mt-5">
-        <h2 class="fw-bolder mb-4">이 상품은 어때요?</h2>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">상품이름</h5>
-                            <!-- Product price-->
-                            가격
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세보기</a></div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Sale badge-->
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">예약중</div>
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">상품이름</h5>
-                            <!-- Product reviews
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div>-->
-                            <!-- Product price-->
-                            <!--<span class="text-muted text-decoration-line-through"></span>-->
-                            가격
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세보기</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Sale badge-->
-                    <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">예약중</div>
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">상품이름</h5>
-                            <!-- Product price-
-                            <span class="text-muted text-decoration-line-through">$50.00</span>-->
-                            가격
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세보기</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">상품이름</h5>
-                            <!-- Product reviews
-                            <div class="d-flex justify-content-center small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div>-->
-                            <!-- Product price-->
-                            가격
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세보기</a></div>
-                    </div>
-                </div>
-            </div>
+        <br><br><br><br>
+        <hr>
+        <br><br>
+        <div th:each="boardImg : ${board.boardImg}" class="text-center" style="text-align: center">
+            <img th:if="${not #strings.isEmpty(boardImg.imgUrl)}" th:src="${boardImg.imgUrl}"
+                 style="width:450px; height:500px"/>
         </div>
     </div>
-</section>
+
+    <!-- Related items section-->
+    <section class="py-5 bg-light">
+        <div class="container px-4 px-lg-5 mt-5">
+            <h2 class="fw-bolder mb-4">이 상품은 어때요?</h2>
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <th:block th:each="board, status: ${boards.getContent()}">
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <a th:href="'/board/' + ${board.id}">
+                                <!-- Product image-->
+                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+                                     alt="..."/>
+                                <!-- Product details-->
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <!-- Product name-->
+                                        <h5 class="fw-bolder">[[${board.title}]]</h5>
+                                        <!-- Product price-->
+                                        [[${#numbers.formatCurrency(board.price)}]]
+                                    </div>
+                                </div>
+                                <!-- Product actions-->
+                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                    <div class="text-center">
+                                        <a class="btn btn-outline-dark mt-auto" onclick="location.href='/ymarket/itemview'">👁[[${board.count}]]</a>
+                                        <a class="btn btn-outline-dark mt-auto" href="#">❤</a>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </section>
+
     <div class="card mb-2 mt-5">
         <div class="card-header bg-light">
             <i class="fa fa-comment fa"></i> 댓글 작성
         </div>
         <div class="card-body">
-            <form role="form" action="/api/board/{boardId}/reply" method="post" >
-                <input type="hidden" id="userId" th:value="${principal.user.id}" />
-                <input type="hidden" id="boardId" th:value="${board.id}" />
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <textarea class="form-control" name="content" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    <button type="button" class="btn btn-dark mt-3">등록</button>
-                </li>
-            </ul>
+            <form role="form" th:action="'/api/board/'+${board.id}+'/reply'" method="post" th:object="${principal}">
+                <input type="hidden" name="userId" th:value="${principal.id}">
+                <input type="hidden" name="boardId" th:value="${board.id}">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <textarea class="form-control" name="content" rows="3"></textarea>
+                        <button class="btn btn-dark mt-3">등록</button>
+                    </li>
+                </ul>
             </form>
         </div>
-    </div>
-    <br/>
-    <div class="card">
-        <div class="card-header">댓글</div>
-        <ul id="reply--box" class="list-group">
-            <li id="reply--1" class="list-group-item d-flex justify-content-between">
-                <div>댓글 내용</div>
-                <div class="d-flex">
-                    <div class="text-monospace">작성자: ssarlength &nbsp;</div>
-                    <button class="badge btn-warning">수정</button><span> | </span>
-                    <button class="badge btn-danger">삭제</button>
+
+        <br/>
+        <div class="card">
+            <div class="card-header">댓글</div>
+            <ul id="reply--box" class="list-group">
+                <div th:each="boardReply: ${board.reply}">
+                    <li th:id="${boardReply.id}" class="list-group-item d-flex justify-content-between">
+                        <div>[[${boardReply.content}]]</div>
+                        <div class="d-flex">
+                            <div class="text-monospace">작성자:[[${boardReply.user.nickname}]]</div>
+                            <span th:if="${principal}== ${boardReply.user}">
+                            <button class="badge btn-warning">수정</button>
+                            <button class="badge btn-danger">삭제</button>
+                        </span>
+                        </div>
+                    </li>
                 </div>
-            </li>
-        </ul>
-        <ul class="list-group">
-            <li id="reply—2" class="list-group-item d-flex justify-content-between">
-                <div>댓글 내용 뚱땅</div>
-                <div class="d-flex">
-                    <div class="text-monospace">작성자: 아이디 &nbsp;</div>
-                    <button class="badge btn-warning">수정</button><span> | </span>
-                    <button class="badge btn-danger">삭제</button>
-                </div>
-            </li>
-        </ul>
-        <ul class="list-group">
-            <li id="reply—3" class="list-group-item d-flex justify-content-between">
-                <div>댓글 내용 뚱땅</div>
-                <div class="d-flex">
-                    <div class="text-monospace">작성자: 아이디 &nbsp;</div>
-                    <button class="badge btn-warning">수정</button><span> | </span>
-                    <button class="badge btn-danger">삭제</button>
-                </div>
-            </li>
-        </ul>
+            </ul>
+        </div>
     </div>
 </div>
 

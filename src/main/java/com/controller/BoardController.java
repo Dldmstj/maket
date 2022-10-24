@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.config.auth.PrincipalDetail;
 import com.model.Board;
 import com.model.type.CategoryType;
 import com.model.type.GenderType;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,22 +37,33 @@ public class BoardController {
     private BoardService boardService;
 
 
-    @GetMapping({"", "/", "/main"})
-    public String index(Model model, @PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable) {
-        model.addAttribute("boards", boardService.글목록(pageable));
-        return "main"; // viewResolver 작동!!
+    @GetMapping({"", "/", "/main"}) public String index(Model model, @PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable) {
+        model.addAttribute("boards", boardService.boardChart(pageable));
+        return "main";
     }
 
-    @GetMapping("/board/{id}")
-    public String findById(@PathVariable int id, Model model) {
-        model.addAttribute("board", boardService.글상세보기(id));
+/*    @GetMapping("/{category}")
+    public String category(Model model, @PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable,
+                           @PathVariable String category) {
+        model.addAttribute("boards", boardService.boardCategory(category));
+        return "categorymain";
+    }*/
 
+    @GetMapping("/board/{id}")
+    public String findById(@PathVariable int id, Model model, @AuthenticationPrincipal PrincipalDetail principalDetail,
+                           @PageableDefault(size = 4, sort="id", direction = Sort.Direction.DESC) Pageable pageable) {
+        boardService.countVisit(id);
+        model.addAttribute("board", boardService.boardDetail(id));
+        model.addAttribute("principal", principalDetail.getUser());
+        model.addAttribute("boards", boardService.boardChart(pageable));
         return "itemview";
     }
 
     @GetMapping("/board/{id}/updateForm")
-    public String updateForm(@PathVariable int id, Model model) {
-        model.addAttribute("board", boardService.글상세보기(id));
+    public String updateForm(@PathVariable int id, Model model,
+                             @AuthenticationPrincipal PrincipalDetail principalDetail) {
+            model.addAttribute("board", boardService.boardDetail(id));
+            model.addAttribute("principal", principalDetail.getUser());
         return "uploadupdate";
     }
 

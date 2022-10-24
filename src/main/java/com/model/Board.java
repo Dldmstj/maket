@@ -51,9 +51,9 @@ public class Board {
     @Enumerated(EnumType.STRING)
     private SellType sell;      // 거래 방식
 
-    // @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
-    // private List<Picture> pic;
-
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<BoardImg> boardImg;      // 게시물 사진
+    
     @OneToMany(mappedBy = "board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties({"board"})
     @OrderBy("id desc")

@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default}">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <!-- Favicon-->
@@ -26,11 +28,14 @@
                     <!--<div class="small mb-1">.</div>-->
                     <!--<h1 class="display-5 fw-bolder">.</h1>-->
                     <div class="fs-5 mb-5">
+                        <input type="hidden" id="board" th:value="${principal}">
                         <!--<span class="text-decoration-line-through">$45.00</span>-->
-                        <p>이름 : </p>
-                        <p>닉네임 : </p>
-                        <p>아이디 : </p>
-                        <p>페이머니 잔액 : </p>
+                        <p>이름 : [[${principal.name}]] </p>
+                        <p>닉네임 : [[${principal.nickname}]]</p>
+                        <p>아이디 : [[${principal.username}]]</p>
+                        <p>이메일 : [[${principal.email}]]</p>
+                        <p>페이머니 잔액 : [[${principal.payMoney}]]</p>
+                        <p>가입일 : [[${principal.createDate}]]</p>
                     </div>
                     <!--<p class="lead"></p>-->
                     <div class="d-flex">
@@ -40,7 +45,7 @@
                             <i class="bi-cart-fill me-1"></i>
                             찜
                         </button>-->
-                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/ymarket/paymoneycharge'">페이머니 충전</button>
+                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/chareForm'">페이머니 충전</button>
                         &nbsp; &nbsp;
                         <button type="button" class="btn btn-outline-dark" onclick="location.href='/ymarket/paymoneyout'">페이머니 출금</button>
                         <!--<button class="btn btn-outline-dark flex-shrink-0" type="button">
@@ -49,25 +54,33 @@
                         </button>-->
                     </div>
                     <div>
-                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/ymarket/updateuser'">회원 정보 수정</button>
+                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/auth/updateForm'">회원 정보 수정</button>
                     </div>
                 </div>
             </div>
             <br><br><br><br><hr>
             <div style=" height:100px;  overflow:scroll">
                 <div>
-                <h6>나의 게시물</h6>
+                    <h6>나의 게시물</h6>
                 </div>
                 <div style="">
                     <ul style="list-style: none">
-                        <li>게시물 뚱땅</li>
-                        <li>게시물 뚱땅</li>
-                        <li>게시물 뚱땅</li>
-                        <li>게시물 뚱땅</li>
-                        <li>게시물 뚱땅</li>
-                        <li>게시물 뚱땅</li>
-                        <li>게시물 뚱땅</li>
-                        <li>게시물 뚱땅</li>
+                        <li>게시물 뚱땅
+                            <button class="btn btn-outline-dark" style="width: 50px; height:25px; font-size: 5px">수정</button>
+                            <button class="btn btn-outline-dark" style="width: 50px; height:25px; font-size: 5px">삭제</button>
+                        </li>
+                        <li>게시물 뚱땅
+                            <button class="btn btn-outline-dark" style="width: 50px; height:25px; font-size: 5px">수정</button>
+                            <button class="btn btn-outline-dark" style="width: 50px; height:25px; font-size: 5px">삭제</button>
+                        </li>
+                        <li>게시물 뚱땅
+                            <button class="btn btn-outline-dark" style="width: 50px; height:25px; font-size: 5px">수정</button>
+                            <button class="btn btn-outline-dark" style="width: 50px; height:25px; font-size: 5px">삭제</button>
+                        </li>
+                        <li>게시물 뚱땅
+                            <button class="btn btn-outline-dark" style="width: 50px; height:25px; font-size: 5px">수정</button>
+                            <button class="btn btn-outline-dark" style="width: 50px; height:25px; font-size: 5px">삭제</button>
+                        </li>
                     </ul>
                 </div>
             </div><hr>
@@ -77,10 +90,10 @@
                 </div>
                 <div>
                     <ul style="list-style: none">
-                        <li>게시물 뚱땅</li>
-                        <li>게시물 뚱땅</li>
-                        <li>게시물 뚱땅</li>
-                        <li>게시물 뚱땅</li>
+                        <li>게시물 뚱땅 <button class="btn btn-outline-dark" style="width: 55px; height:25px; font-size: 5px">찜 삭제</button></li>
+                        <li>게시물 뚱땅 <button class="btn btn-outline-dark" style="width: 55px; height:25px; font-size: 5px">찜 삭제</button></li>
+                        <li>게시물 뚱땅 <button class="btn btn-outline-dark" style="width: 55px; height:25px; font-size: 5px">찜 삭제</button></li>
+                        <li>게시물 뚱땅 <button class="btn btn-outline-dark" style="width: 55px; height:25px; font-size: 5px">찜 삭제</button></li>
                     </ul>
                 </div>
             </div>

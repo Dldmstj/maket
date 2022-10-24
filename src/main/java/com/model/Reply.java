@@ -33,4 +33,10 @@ public class Reply {
 
     @CreationTimestamp
     private Timestamp createDate;      // 댓글 작성 시간
+
+    @Override
+    public String toString() {
+        return "Reply [id=" + id + ", content=" + content + ", board=" + board + ", user=" + user + ", createDate="
+                + createDate + "]";
+    }
 }

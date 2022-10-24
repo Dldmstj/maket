@@ -30,7 +30,7 @@
         pay_method: "card",
         merchant_uid : 'merchant_'+new Date().getTime(),
         name : '페이머니 충전',
-        amount : $("#charge").val(),
+        amount : $("#payMoney").val(),
         buyer_email : 'iamport@siot.do',
         buyer_name : '구매자',
         buyer_tel : '010-1234-5678',
@@ -39,7 +39,7 @@
       }, function (rsp) { // callback
         if (rsp.success) {
           alert("완료 -> imp_uid : " +rsp.imp_uid+"/merchant_uid(orderKey):"+rsp.merchant_uid);
-          location.href = "mypage";
+          location.href = "/mypageForm";
           // 결제 성공 시 로직,
         } else {
           alert("실패:코드("+rsp.error_code+") /메세지("+rsp.error_msg+")");
@@ -54,16 +54,18 @@
 
 <div layout:fragment="content">
   <section class="py-5">
-    <div class="form">
+    <form role="form" method="post" action="/charge">
+      <input type="hidden" name="_method" value="put">
+      <input type="hidden" name="id" id="id" th:value="${principal.id}">
       <h2 style="margin:80px 300px -30px 300px;"><img src="/icon/paymoney.png" style="width:30px; height:30px; margin-right:15px">페이머니 충전</h2><br><br><br>
       <div class="form-group py-2">
         <label >충전 금액</label>
-        <input type="text" id="charge" class="form-control" placeholder="천원 단위로 입력해주세요" style="width:300px">
+        <input type="text" id="payMoney" name="payMoney" class="form-control" placeholder="천원 단위로 입력해주세요" style="width:300px">
       </div>
 
-      <button type="button" class="btn btn-outline-dark" onclick="requestPay()">다음</button>
+      <button class="btn btn-outline-dark" onclick="requestPay()">다음</button>
 
-    </div>
+    </form>
   </section>
 
 </div>
