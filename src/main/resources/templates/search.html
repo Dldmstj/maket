@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/default}">
+
+<div layout:fragment="content">
+
+    <!-- Header-->
+    <!--<header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">-->
+    <header>
+
+                <!--<img src="/banner/banner1.png" ></div>-->
+                <br><br>
+                <div th:replace="/fragments/banner::banner"></div>
+
+                <!--<div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Shop in style</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+                </div>-->
+
+    </header>
+    <br>
+    <h5 style="text-align: center">[[${keyword}]] 검색 결과</h5>
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <th:block th:each="board, status: ${searchList.getContent()}">
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <a th:href="'/board/' + ${board.id}" style="text-decoration: none; color:black">
+                        <!-- Product image-->
+                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 style="text-decoration: none; color:black" class="fw-bolder">[[${board.title}]]</h5>
+                                <!-- Product price-->
+                                [[${#numbers.formatCurrency(board.price)}]]
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto" onclick="location.href='/ymarket/itemview'">👁[[${board.count}]]</a>
+                                <a class="btn btn-outline-dark mt-auto" href="#">❤</a>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+                </th:block>
+            </div>
+        </div>
+
+    </section>
+
+
+
+</div>
+
+</html>

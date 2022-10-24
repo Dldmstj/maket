@@ -45,6 +45,19 @@ public class BoardService {
     }       // 게시물 페이징, 목록 정렬
 
     @Transactional(readOnly = true)
+    public Page<Board> search(String keyword, Pageable pageable){
+        Page<Board> searchList = boardRepository.findByTitleContaining(keyword, pageable);
+        return searchList;
+    }       // 검색 결과 페이징
+
+    @Transactional(readOnly = true)
+    public List<Board> boardCategory(String category, Pageable pageable){
+        List<Board> categoryMain = boardRepository.findByCategory(category, pageable);
+        return categoryMain;
+    }
+    // 게시물 카테고리별 상세보기
+
+    @Transactional(readOnly = true)
     public Board boardDetail(int id) {
         return boardRepository.findById(id)
                 .orElseThrow(()->{
@@ -52,9 +65,6 @@ public class BoardService {
                 });
     }       // 게시물 상세보기
 
-   /* @Transactional(readOnly = true)
-    public Page<Board> boardCategory(String category);*/
-    // 게시물 카테고리별 상세보기
 
     @Transactional
     public void boardDelete(int id) {

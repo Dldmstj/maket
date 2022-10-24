@@ -26,6 +26,14 @@
         }
     </script>
 
+    <script type="text/javascript">
+
+        function purchase(){
+            var purchase = window.open('purchase', '구매하기', 'width=500px,height=600px,scrollbars=yes');
+        }
+
+    </script>
+
 </th:block>
 
 <head>
@@ -74,7 +82,7 @@
                     <button type="button" class="btn btn-outline-dark">찜하기</button>
 
                     <span th:if="${board.situation} == 0">
-                        <button type="button" class="btn btn-outline-dark">구매하기</button>
+                        <button type="button" class="btn btn-outline-dark" onclick="purchase()">구매하기</button>
                     </span>
                     <!--<button class="btn btn-outline-dark flex-shrink-0" type="button">
                         <i class="bi-cart-fill me-1"></i>
@@ -153,7 +161,7 @@
         <br/>
         <div class="card">
             <div class="card-header">댓글</div>
-            <ul id="reply--box" class="list-group">
+            <ul id="reply—box" class="list-group">
                 <div th:each="boardReply: ${board.reply}">
                     <li th:id="${boardReply.id}" class="list-group-item d-flex justify-content-between">
                         <div>[[${boardReply.content}]]</div>

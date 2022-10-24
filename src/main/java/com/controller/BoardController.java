@@ -8,6 +8,8 @@ import com.model.type.SellType;
 import com.model.type.StateType;
 import com.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -17,6 +19,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 @Controller
 public class BoardController {
@@ -37,17 +41,28 @@ public class BoardController {
     private BoardService boardService;
 
 
-    @GetMapping({"", "/", "/main"}) public String index(Model model, @PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable) {
+    @GetMapping({"", "/", "/main"})
+    public String index(Model model, @PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable) {
         model.addAttribute("boards", boardService.boardChart(pageable));
         return "main";
     }
 
-/*    @GetMapping("/{category}")
+    @GetMapping({"/serch"})
+    public String search(String keyword, @PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable,
+                         Model model) {
+        Page<Board> searchList = boardService.search(keyword, pageable);
+        model.addAttribute("keyword", keyword.toString());
+        model.addAttribute("searchList", searchList);
+        return "/search";
+    }
+
+    @GetMapping("/auth/{category}")
     public String category(Model model, @PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable,
                            @PathVariable String category) {
-        model.addAttribute("boards", boardService.boardCategory(category));
+        List<Board> categoryMain = boardService.boardCategory(category, pageable);
+        model.addAttribute("categoryMain", categoryMain);
         return "categorymain";
-    }*/
+    }
 
     @GetMapping("/board/{id}")
     public String findById(@PathVariable int id, Model model, @AuthenticationPrincipal PrincipalDetail principalDetail,
@@ -73,4 +88,11 @@ public class BoardController {
         model.addAttribute("board", new Board());
         return "upload";
     }
+
+    @GetMapping({"/header"}) public String header(Model model, CategoryType category) {
+        model.addAttribute("category", category);
+        return "/fragments/header";
+    }
+
+
 }
