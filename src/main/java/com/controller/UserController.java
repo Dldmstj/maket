@@ -74,17 +74,16 @@ public class UserController {
         return "updateuser";
     }
 
-    @GetMapping("/chareForm")
+    @GetMapping("/chargeForm")
     public String chargeForm(@AuthenticationPrincipal PrincipalDetail principalDetail, Model model){
         model.addAttribute("principal", principalDetail.getUser());
         return "paymoneycharge";
     }
 
-    @GetMapping("")
-    public String buyForm(@AuthenticationPrincipal PrincipalDetail principalDetail, Model model, Board board) {
-        model.addAttribute("principal", principalDetail);
-        model.addAttribute("board", board);
-        return "";
+    @GetMapping("/withdrowForm")
+    public String withdrowForm(@AuthenticationPrincipal PrincipalDetail principalDetail, Model model){
+        model.addAttribute("principal", principalDetail.getUser());
+        return "paymoneyout";
     }
 
 }

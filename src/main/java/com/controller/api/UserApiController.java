@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserApiController {
 
-    public UserApiController() {
-    }
 
     @Autowired
     private UserService userService;
@@ -47,11 +45,17 @@ public class UserApiController {
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
-    @PutMapping("")
-    public ResponseDto<Integer> buy(Board board, int id, int payMoney) { // key=value, x-www-form-urlencoded
-        userService.sell(board.getUser().getId(), payMoney);      // 게시물작성자의 아이디
-        userService.buy(id, payMoney);      // 접속한 사람의 아이디
+    @PutMapping("/withdrow")
+    public ResponseDto<Integer> withdrow(int id, int payMoney) { // key=value, x-www-form-urlencoded
+        userService.withdrow(id, payMoney);
+        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+    }
+
+    @PutMapping("/api/purchase")
+    public ResponseDto<Integer> buy(int sellerId, int buyerId, Board board, int payMoney) { // key=value, x-www-form-urlencoded
         board.setSituation(1);
+        userService.sell(sellerId, payMoney);      // 게시물작성자의 아이디
+        userService.buy(buyerId, payMoney);      // 접속한 사람의 아이디
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 

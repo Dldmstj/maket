@@ -4,7 +4,7 @@ import com.model.Board;
 import com.model.BoardImg;
 import com.repository.BoardImgRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +28,7 @@ public class BoardImgService {
 
         if(!StringUtils.isEmpty(oriImgName)) {
             imgName = fileService.uploadFile(boardImgLocation, oriImgName, boardImgFile.getBytes());
-            imgUrl = "/imges/" + imgName;
+            imgUrl = "/images/" + imgName;
         }
 
         boardImg.updateBoardImg(oriImgName, imgName, imgUrl);

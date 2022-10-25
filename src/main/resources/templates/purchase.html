@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -16,22 +17,25 @@
     </style>
 </th:block>-->
 
-<div layout:fragment="content">
+<form layout:fragment="content" method="post" action="/api/purchase" th:object="${board}">
+    <input type="hidden" name="_method" value="put">
+    <input type="hidden" name="sellerId" id="sellerId" th:value="${board.user.id}">
+    <input type="hidden" name="buyerId" id="buyerId" th:value="${principal.id}">
+    <input type="hidden" name="payMoney" id="payMoney" th:value="${board.price}">
+        <div class="form-group py-2">
+            <label th:for="nickname">판매자 닉네임 :[[${board.user.nickname}]]</label>
+        </div>
+        <div class="form-group py-2">
+            <label th:for="board">구매할 상품 :[[${board.title}]]</label>
+        </div>
+        <div class="form-group py-2">
+            <label th:for="price">가격 : [[${board.price}]]</label>
+        </div>
 
-        <div class="form-group py-2">
-            <label th:for="nickname">판매자 닉네임 :</label>
-        </div>
-        <div class="form-group py-2">
-            <label th:for="">구매할 상품 : </label>
-        </div>
-        <div class="form-group py-2">
-            <label th:for="price">가격 : </label>
-        </div>
-
-    <button type="button" class="btn btn-outline-dark" onclick="window.close()">구매하기</button>
+    <button class="btn btn-outline-dark">구매하기</button>
     <p>구매 확정 이후에는 환불이 어려울 수 있습니다.</p>
 
-</div>
+</form>
 
 
 </html>

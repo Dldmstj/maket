@@ -4,6 +4,7 @@ import com.dto.ReplySaveRequestDto;
 import com.model.Board;
 import com.model.BoardImg;
 import com.model.User;
+import com.model.type.CategoryType;
 import com.repository.BoardRepository;
 import com.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
@@ -51,8 +52,8 @@ public class BoardService {
     }       // 검색 결과 페이징
 
     @Transactional(readOnly = true)
-    public List<Board> boardCategory(String category, Pageable pageable){
-        List<Board> categoryMain = boardRepository.findByCategory(category, pageable);
+    public Page<Board> boardCategory(CategoryType category, Pageable pageable){
+        Page<Board> categoryMain = boardRepository.findByCategory(category, pageable);
         return categoryMain;
     }
     // 게시물 카테고리별 상세보기

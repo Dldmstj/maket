@@ -49,6 +49,10 @@ public class UserService {
     public int charge(int id, int payMoney) {
         return userRepository.charge(id,payMoney);
     }
+    @Transactional
+    public int withdrow(int id, int payMoney) {
+        return userRepository.withdraw(id,payMoney);
+    }
 
     @Transactional
     public int buy(int id, int payMoney) {

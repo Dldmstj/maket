@@ -13,11 +13,10 @@
   </style>
 </th:block>
 
-<!-- 사용자 스크립트 추가 -->
+<!-- 사용자 스크립트 추가
 <th:block layout:fragment="script">
-  <!-- jQuery -->
+
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-  <!-- iamport.payment.js -->
   <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 
   <script type="text/javascript">
@@ -49,7 +48,7 @@
     }
   </script>
 
-</th:block>
+</th:block>-->
 
 
 <div layout:fragment="content">
@@ -57,13 +56,13 @@
     <form role="form" method="post" action="/charge">
       <input type="hidden" name="_method" value="put">
       <input type="hidden" name="id" id="id" th:value="${principal.id}">
-      <h2 style="margin:80px 300px -30px 300px;"><img src="/icon/paymoney.png" style="width:30px; height:30px; margin-right:15px">페이머니 충전</h2><br><br><br>
+      <h2><img src="/icon/paymoney.png" style="width:30px; height:30px; margin-right:15px">페이머니 충전</h2><br><br><br>
       <div class="form-group py-2">
         <label >충전 금액</label>
         <input type="text" id="payMoney" name="payMoney" class="form-control" placeholder="천원 단위로 입력해주세요" style="width:300px">
       </div>
 
-      <button class="btn btn-outline-dark" onclick="requestPay()">다음</button>
+      <button class="btn btn-outline-dark" onclick="location.href='paymoneycharge2'">다음</button>
 
     </form>
   </section>

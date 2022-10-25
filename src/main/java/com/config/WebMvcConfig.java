@@ -1,11 +1,15 @@
 package com.config;
 
-import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-    String uploadPath = "file:///D:/";
+
+    String uploadPath = "file:///D:/upPic/";
+
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

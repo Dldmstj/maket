@@ -58,10 +58,11 @@ public class BoardController {
 
     @GetMapping("/auth/{category}")
     public String category(Model model, @PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable,
-                           @PathVariable String category) {
-        List<Board> categoryMain = boardService.boardCategory(category, pageable);
+                           @PathVariable CategoryType category) {
+        Page<Board> categoryMain = boardService.boardCategory(category, pageable);
         model.addAttribute("categoryMain", categoryMain);
-        return "categorymain";
+        model.addAttribute("category", category);
+        return "view";
     }
 
     @GetMapping("/board/{id}")
@@ -72,6 +73,13 @@ public class BoardController {
         model.addAttribute("principal", principalDetail.getUser());
         model.addAttribute("boards", boardService.boardChart(pageable));
         return "itemview";
+    }
+
+    @GetMapping("/board/{id}/buyForm")
+    public String buyForm(@PathVariable int id, @AuthenticationPrincipal PrincipalDetail principalDetail, Model model, Board board) {
+        model.addAttribute("principal", principalDetail.getUser());
+        model.addAttribute("board", boardService.boardDetail(id));
+        return "purchase";
     }
 
     @GetMapping("/board/{id}/updateForm")
