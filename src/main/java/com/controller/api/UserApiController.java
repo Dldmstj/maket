@@ -11,7 +11,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 public class UserApiController {
@@ -23,11 +28,12 @@ public class UserApiController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @PostMapping("/auth/joinProc")
+   /* @PostMapping("/auth/joinProc")
     public ResponseDto<Integer> save(User user) {
         userService.userSave(user);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); // 자바오브젝트를 JSON으로 변환해서 리턴 (Jackson)
-    }
+    }*/
+
 
     @PutMapping("/user")
     public ResponseDto<Integer> update(User user) { // key=value, x-www-form-urlencoded

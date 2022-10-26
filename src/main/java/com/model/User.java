@@ -15,6 +15,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -33,7 +34,7 @@ public class User {
     @Column(nullable = false, length = 50)
     private String nickname;        // 닉네임
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 30, unique = true)
     private String username;    // 아이디
 
     @Column(nullable = false, length = 100)
@@ -65,5 +66,9 @@ public class User {
 
     @CreationTimestamp
     private Timestamp createDate;   // 가입일
+
+/*    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OrderBy("id desc ")
+    private List<Wish> wish;      // 찜*/
 
 }

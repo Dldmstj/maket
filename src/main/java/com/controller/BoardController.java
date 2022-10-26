@@ -7,6 +7,7 @@ import com.model.type.GenderType;
 import com.model.type.SellType;
 import com.model.type.StateType;
 import com.service.BoardService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class BoardController {
 
     @ModelAttribute("categoryTypes")
@@ -42,7 +44,7 @@ public class BoardController {
 
 
     @GetMapping({"", "/", "/main"})
-    public String index(Model model, @PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String index(Model model, Board board, @PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable) {
         model.addAttribute("boards", boardService.boardChart(pageable));
         return "main";
     }

@@ -6,6 +6,7 @@ import com.dto.ResponseDto;
 import com.model.Board;
 import com.model.BoardImg;
 import com.service.BoardService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class BoardApiController {
 
     @Autowired
@@ -31,14 +33,14 @@ public class BoardApiController {
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
-    @DeleteMapping("/api/board/{id}")
+    @DeleteMapping(value = "/api/board/{id}", produces = "text/plane; charset=utf-8")
     public ResponseDto<Integer> deleteById(@PathVariable int id){
         boardService.boardDelete(id);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
-    @PutMapping("/api/board/{id}")
-    public ResponseDto<Integer> update(@PathVariable int id, Board board){
+    @PutMapping(value = "/api/board/{id}", consumes = "application/json", produces = "text/plain; charset=utf-8")
+    public ResponseDto<Integer> update(@PathVariable int id, @RequestBody Board board){
         boardService.update(id, board);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
@@ -49,8 +51,8 @@ public class BoardApiController {
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
-    @DeleteMapping("/api/board/{boardId}/reply/{replyId}")
-    public ResponseDto<Integer> replyDelete(@PathVariable int replyId) {
+    @DeleteMapping(value = "/api/board/{boardId}/reply/{replyId}", produces = "text/plane; charset=utf-8")
+    public ResponseDto<Integer> replyDelete(@PathVariable int boardId, @PathVariable int replyId) {
         boardService.replyDelete(replyId);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }

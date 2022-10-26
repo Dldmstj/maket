@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.model.type.CategoryType;
 import com.model.type.SellType;
 import com.model.type.StateType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -15,7 +12,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Data
+@Data @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -61,6 +58,10 @@ public class Board {
     @JsonIgnoreProperties({"board"})
     @OrderBy("id desc")
     private List<Reply> reply;      // 댓글
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OrderBy("id desc ")
+    private List<Wish> wish;      // 찜
 
     @CreationTimestamp
     private Timestamp createDate;       // 작성일

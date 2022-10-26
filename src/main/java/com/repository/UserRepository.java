@@ -13,6 +13,10 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 
     Optional<User> findByNameAndEmail(String username, String email);
 
+    boolean existsByUsername(String username);
+    boolean existsByNickname(String nickname);
+    boolean existsByPhone(String phone);
+
     @Modifying
     @Query("update User u set u.payMoney = u.payMoney + :payMoney where u.id = :id")
     int charge(int id, int payMoney);       // payMoney 충전

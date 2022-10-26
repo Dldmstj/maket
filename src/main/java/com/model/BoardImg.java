@@ -1,14 +1,11 @@
 package com.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Data @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Table
@@ -31,6 +28,15 @@ public class BoardImg {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "boardId")
     private Board board;
+
+    @Builder
+    public BoardImg(String imgName, String oriImgName, String imgUrl, String mainImg, Board board) {
+        this.imgName = imgName;
+        this.oriImgName = oriImgName;
+        this.imgUrl = imgUrl;
+        this.mainImg = mainImg;
+        this.board = board;
+    }
 
     public void updateBoardImg(String oriImgName, String imgName, String imgUrl) {
         this.oriImgName = oriImgName;

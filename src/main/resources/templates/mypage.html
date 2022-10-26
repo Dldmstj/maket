@@ -28,7 +28,7 @@
                     <!--<div class="small mb-1">.</div>-->
                     <!--<h1 class="display-5 fw-bolder">.</h1>-->
                     <div class="fs-5 mb-5">
-                        <input type="hidden" id="board" th:value="${principal}">
+                        <input type="hidden" id="id" th:value="${principal}">
                         <!--<span class="text-decoration-line-through">$45.00</span>-->
                         <p>이름 : [[${principal.name}]] </p>
                         <p>닉네임 : [[${principal.nickname}]]</p>
@@ -45,9 +45,9 @@
                             <i class="bi-cart-fill me-1"></i>
                             찜
                         </button>-->
-                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/chareForm'">페이머니 충전</button>
+                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/chargeForm'">페이머니 충전</button>
                         &nbsp; &nbsp;
-                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/ymarket/paymoneyout'">페이머니 출금</button>
+                        <button type="button" class="btn btn-outline-dark" onclick="location.href='/withdrowForm'">페이머니 출금</button>
                         <!--<button class="btn btn-outline-dark flex-shrink-0" type="button">
                             <i class="bi-cart-fill me-1"></i>
                             채팅

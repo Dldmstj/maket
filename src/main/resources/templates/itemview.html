@@ -28,6 +28,25 @@
 
     <script type="text/javascript">
 
+        function replyDelete(id, replyId) {
+            var id = $("#id").val();
+            var replyId = $("#replyId").val();
+
+            $.ajax({
+                type: "DELETE",
+                url: '/api/board/' +id+ '/reply/'+replyId,
+                dataType: "json"
+            }).done(function(resp){
+                alert("댓글이 삭제되었습니다.");
+                location.href = '/board/' +id;
+            }).fail(function(error){
+                alert(JSON.stringify(error));
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+
         var id = [[${board.id}]];
         function purchase() {
             var purchase = window.open('http://localhost:8001/board/'+id+'/buyForm', '구매하기', 'width=500px,height=600px,scrollbars=yes');
@@ -35,39 +54,13 @@
 
     </script>
 
-    <script>
-        function addCart() {
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
+    <script type="text/javascript">
 
-            var url = "/wish";
-            var paramData = {
-                itemId : $("#board").val(),
-            };
-
-            var param = JSON.stringify(paramData);
-
-            $.ajax({
-                url: url,
-                type: "POST",
-                contentType: "application/json",
-                data: param,
-                beforeSend: function(xhr) {
-                    /* 데이터를 전송하기 전에 헤더에 csrf 값을 설정 */
-                    xhr.setRequestHeader(header, token);
-                },
-                dataType: "json",
-                cache: false,
-                success: function(result, status) {
-                    alert("상품을 위시리스트에 담았습니다.");
-                    location.href = '/';
-                },
-                error: function(jqXHR, status, error) {
-                        alert('찜 실패.');
-                        location.href = '/members/login';
-                }
-            });
+        var id = [[${board.id}]];
+        function updateForm() {
+            location.href ='http://localhost:8001/board/'+id+'/updateForm';
         }
+
     </script>
 
 </th:block>
@@ -81,7 +74,7 @@
 </head>
 
 <form layout:fragment="content" action="/wish" method="post">
-    <input type="hidden" id="board" name="board" th:value="${board.id}">
+    <input type="hidden" id="id" name="board" th:value="${board.id}">
     <input type="hidden" id="user" name="user" th:value="${principal.id}">
     <!-- Product section-->
     <div class="py-5">
@@ -127,8 +120,7 @@
                     </button>-->
                     <br><br>
                     <span th:if="${principal} == ${board.user}">
-                        <button type="button" th:href="'/board/'+${board.id}+'/updateForm'"
-                                class="btn btn-warning">수정</button>
+                        <button type="button" class="btn btn-warning" onclick="updateForm()">수정</button>
                         <button type="button" id="btn-delete" onclick="deleteById()" class="btn btn-danger">삭제</button>
                     </span>
                 </div>
@@ -153,8 +145,8 @@
                         <div class="card h-100">
                             <a th:href="'/board/' + ${board.id}" style="text-decoration: none; color:black">
                                 <!-- Product image-->
-                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-                                     alt="..."/>
+                                <!--<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+                                     alt="..."/>-->
                                 <!-- Product details-->
                                 <div class="card-body p-4">
                                     <div class="text-center">
@@ -199,23 +191,24 @@
         </div>
 
         <br/>
-        <div class="card">
+        <form class="card">
             <div class="card-header">댓글</div>
             <ul id="reply—box" class="list-group">
                 <div th:each="boardReply: ${board.reply}">
+                    <input type="hidden" id="replyId" name="replyId" th:value="${boardReply.id}">
                     <li th:id="${boardReply.id}" class="list-group-item d-flex justify-content-between">
                         <div>[[${boardReply.content}]]</div>
                         <div class="d-flex">
                             <div class="text-monospace">작성자:[[${boardReply.user.nickname}]]</div>
                             <span th:if="${principal}== ${boardReply.user}">
-                            <button class="badge btn-warning">수정</button>
-                            <button class="badge btn-danger">삭제</button>
+                            <!--<button type="button" class="badge btn-warning">수정</button>-->
+                            <button type="button" class="badge btn-danger"  onclick="replyDelete()" >삭제</button>
                         </span>
                         </div>
                     </li>
                 </div>
             </ul>
-        </div>
+        </form>
     </div>
 </form>
 
