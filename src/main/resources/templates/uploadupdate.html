@@ -38,6 +38,9 @@
                 itemImgIds: $("#itemImgIds").val()
             };
 
+            console.log(data.toString())
+            console.log(id)
+
             $.ajax({
                 type: "PUT",
                 url: "/api/board/" + id,
@@ -89,8 +92,8 @@
 
 <div layout:fragment="content">
 <!--    <input type="hidden" id="board" th:value="${principal}">-->
-    <div class="form" action="/api/board/{id}" method="post">
-        <input type="hidden" name="_method" value="put">
+    <div class="form">
+<!--        <input type="hidden" name="_method" value="put">-->
         <h2><img src="/icon/upload.png" style="width:30px; height:30px; margin-right:15px">상품수정</h2><br>
         <form role="form" th:object="${board}">
             <input type="hidden" id="id" th:value="${board.id}"/>
@@ -150,7 +153,7 @@
                 </div>
             </div>
             <div style="text-align:center" class="py-3">
-                <button class="btn btn-outline-dark">수정 완료</button>
+                <button type="button" class="btn btn-outline-dark" onclick="update()">수정 완료</button>
                 <button type="button" class="btn btn-outline-dark" onclick="history.back()">취소</button>
                 <!--<button type="button" class="btn btn-outline-dark">임시저장</button>-->
 

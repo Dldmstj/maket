@@ -65,4 +65,6 @@ public class Board {
 
     @CreationTimestamp
     private Timestamp createDate;       // 작성일
+
+
 }

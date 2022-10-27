@@ -59,6 +59,13 @@ public class BoardService {
     // 게시물 카테고리별 상세보기
 
     @Transactional(readOnly = true)
+    public Page<Board> myBoard(int id, Pageable pageable){
+        Page<Board> myBoard = boardRepository.findByUserId(id, pageable);
+        return myBoard;
+    }
+    // 게시물 카테고리별 상세보기
+
+    @Transactional(readOnly = true)
     public Board boardDetail(int id) {
         return boardRepository.findById(id)
                 .orElseThrow(()->{
@@ -93,6 +100,12 @@ public class BoardService {
         return boardRepository.countVisit(id);
     }
     // 조회수 증가
+
+    @Transactional
+    public int complete(int id) {
+        return boardRepository.complete(id);
+    }
+    // 상품 판매완료
 
     @Transactional
     public void replySave(ReplySaveRequestDto replySaveRequestDto) {

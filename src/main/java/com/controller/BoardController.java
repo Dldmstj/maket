@@ -79,6 +79,7 @@ public class BoardController {
 
     @GetMapping("/board/{id}/buyForm")
     public String buyForm(@PathVariable int id, @AuthenticationPrincipal PrincipalDetail principalDetail, Model model, Board board) {
+        boardService.complete(id);
         model.addAttribute("principal", principalDetail.getUser());
         model.addAttribute("board", boardService.boardDetail(id));
         return "purchase";

@@ -4,11 +4,16 @@ import com.config.auth.PrincipalDetail;
 import com.model.Board;
 import com.model.User;
 import com.model.type.GenderType;
+import com.service.BoardService;
 import com.service.UserService;
 import com.validator.CheckNicknameValidator;
 import com.validator.CheckPhoneValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -34,6 +39,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BoardService boardService;
 
     private final CheckPhoneValidator checkUsernameValidator;
     private final CheckNicknameValidator checkNicknameValidator;
@@ -98,8 +106,11 @@ public class UserController {
     }
 
     @GetMapping("/myPageForm")
-    public String myPageForm(Model model, @AuthenticationPrincipal PrincipalDetail principalDetail) {
-            model.addAttribute("principal",principalDetail.getUser());
+    public String myPageForm(Model model, @AuthenticationPrincipal PrincipalDetail principalDetail,
+                             @PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Board> myBoard = boardService.myBoard(principalDetail.getUser().getId(), pageable);
+        model.addAttribute("user",principalDetail.getUser());
+        model.addAttribute("myBoard", myBoard);
         return "mypage";
     }
 

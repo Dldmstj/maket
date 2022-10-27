@@ -1,10 +1,14 @@
 package com.controller.api;
 
+import com.dto.ChargeRequest;
 import com.dto.ResponseDto;
 import com.model.Board;
 import com.model.User;
 import com.model.type.GenderType;
 import com.service.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,8 +23,10 @@ import javax.validation.Valid;
 import java.util.Map;
 
 @RestController
+@Slf4j
 public class UserApiController {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private UserService userService;
@@ -45,14 +51,28 @@ public class UserApiController {
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
+//    @PutMapping("/charge")
+//    public ResponseDto<Integer> charge(Integer id, Integer payMoney) { // key=value, x-www-form-urlencoded
+//        logger.info("Input id : " + id + " // payMoney : " + payMoney);
+//        userService.charge(id, payMoney);
+//        return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
+//    }
+
     @PutMapping("/charge")
-    public ResponseDto<Integer> charge(int id, int payMoney) { // key=value, x-www-form-urlencoded
+    public ResponseDto<Integer> charge(@RequestBody ChargeRequest request) { // key=value, x-www-form-urlencoded
+        int id = request.getId();
+        int payMoney = request.getPayMoney();
+        logger.info("Input id : " + id + " // payMoney : " + payMoney);
+        
         userService.charge(id, payMoney);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }
 
     @PutMapping("/withdrow")
-    public ResponseDto<Integer> withdrow(int id, int payMoney) { // key=value, x-www-form-urlencoded
+    public ResponseDto<Integer> withdrow(
+            int id,
+            int payMoney
+    ) { // key=value, x-www-form-urlencoded
         userService.withdrow(id, payMoney);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }

@@ -7,7 +7,7 @@
 <th:block layout:fragment="css">
     <style>
         .form {
-            margin-left: 200px;
+            margin-left: 300px;
         }
 
     </style>
@@ -22,10 +22,13 @@
     <script type="text/javascript">
 
         function charge() {
+            console.log("init")
             let data = {
                 id: $("#id").val(),
                 payMoney: $("#payMoney").val()
             }
+            console.log(data.id)
+            console.log(data.payMoney)
 
             $.ajax({
                 type: "PUT",
@@ -34,7 +37,7 @@
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json"
-            }).done(function (resp) {
+            }).success(function (resp) {
                 var IMP = window.IMP;
                 IMP.init('imp34404581'); //iamport 대신 자신의 "가맹점 식별코드"를 사용
                 IMP.request_pay({
@@ -51,14 +54,17 @@
                 }, function (rsp) { // callback
                     if (rsp.success) {
                         alert("완료 -> imp_uid : " + rsp.imp_uid + "/merchant_uid(orderKey):" + rsp.merchant_uid);
-                        location.href = "/mypageForm";
+                        // location.href = "/mypageForm";
+                        console.log("성공한거임?")
                         // 결제 성공 시 로직,
                     } else {
                         alert("실패:코드(" + rsp.error_code + ") /메세지(" + rsp.error_msg + ")");
+                        console.log("실패함")
                         // 결제 실패 시 로직,
                     }
                 }).fail(function (error) {
-                    alert(JSON.stringify(error));
+                    alert(JSON.stringify(error))
+                    console.log("실패함")
                 });
             })
         }
@@ -69,8 +75,8 @@
 
 <div layout:fragment="content">
     <section class="py-5">
-        <form action="/charge" method="post">
-                  <input type="hidden" name="_method" value="put">
+        <form class="form">
+<!--                  <input type="hidden" name="_method" value="put">-->
             <input type="hidden" id="id" name="id" th:field="${user.id}" th:value="${user.id}">
             <h2><img src="/icon/paymoney.png" style="width:30px; height:30px; margin-right:15px">페이머니 충전</h2>
             <br><br><br>
@@ -80,7 +86,7 @@
                        style="width:300px">
             </div>
 
-            <button class="btn btn-outline-dark" onclick="charge()">다음</button>
+            <button type="button" class="btn btn-outline-dark" onclick="charge()">다음</button>
 
         </form>
     </section>

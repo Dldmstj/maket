@@ -15,11 +15,16 @@ public interface BoardRepository extends JpaRepository<Board, Integer>{
     Page<Board> findByCategory(CategoryType category, Pageable pageable);
 
     Page<Board> findByTitleContaining(String keyword, Pageable pageable);      // 제목 검색
+    Page<Board> findByUserId(int id, Pageable pageable);      // 내가 쓴 게시물3
 
 /*    Page<Board> wish(int userId, Pageable pageable);*/
 
     @Modifying
     @Query("update Board b set b.count = b.count + 1 where b.id = :id")
     int countVisit(int id);
+
+    @Modifying
+    @Query("update Board b set b.situation = 1 where b.id = :id")
+    int complete(int id);
 
 }

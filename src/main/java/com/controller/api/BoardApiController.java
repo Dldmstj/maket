@@ -7,6 +7,8 @@ import com.model.Board;
 import com.model.BoardImg;
 import com.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +20,8 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class BoardApiController {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private BoardService boardService;
@@ -41,6 +45,7 @@ public class BoardApiController {
 
     @PutMapping(value = "/api/board/{id}", consumes = "application/json", produces = "text/plain; charset=utf-8")
     public ResponseDto<Integer> update(@PathVariable int id, @RequestBody Board board){
+        logger.info("board update :: " + board.toString());
         boardService.update(id, board);
         return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
     }

@@ -21,21 +21,21 @@
             <h2><img src="/icon/login.png" style="width:30px; height:30px; margin-right:15px">MY PAGE</h2><br>
             <div class="row gx-4 gx-lg-5 align-items-center">
                 <div class="col-md-6">
-                    <img class="card-img-top mb-5 mb-md-0" src="/icon/profile.jpeg" style="width:450px; height:500px"/>
-                    <br><input type="file" name="profile">
+                    <!--<img class="card-img-top mb-5 mb-md-0" src="/icon/profile.jpeg" style="width:450px; height:500px"/>-->
+                    <!--<br><input type="file" name="profile">-->
                 </div>
                 <div class="col-md-6" >
                     <!--<div class="small mb-1">.</div>-->
                     <!--<h1 class="display-5 fw-bolder">.</h1>-->
                     <div class="fs-5 mb-5">
-                        <input type="hidden" id="id" th:value="${principal}">
+                        <input type="hidden" id="id" th:value="${user}">
                         <!--<span class="text-decoration-line-through">$45.00</span>-->
-                        <p>이름 : [[${principal.name}]] </p>
-                        <p>닉네임 : [[${principal.nickname}]]</p>
-                        <p>아이디 : [[${principal.username}]]</p>
-                        <p>이메일 : [[${principal.email}]]</p>
-                        <p>페이머니 잔액 : [[${principal.payMoney}]]</p>
-                        <p>가입일 : [[${principal.createDate}]]</p>
+                        <p>이름 : [[${user.name}]] </p>
+                        <p>닉네임 : [[${user.nickname}]]</p>
+                        <p>아이디 : [[${user.username}]]</p>
+                        <p>이메일 : [[${user.email}]]</p>
+                        <p>페이머니 잔액 : [[${user.payMoney}]]</p>
+                        <p>가입일 : [[${user.createDate}]]</p>
                     </div>
                     <!--<p class="lead"></p>-->
                     <div class="d-flex">
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <br><br><br><br><hr>
-            <div style=" height:100px;  overflow:scroll">
+            <!--<div style=" height:100px;  overflow:scroll">
                 <div>
                     <h6>나의 게시물</h6>
                 </div>
@@ -83,21 +83,44 @@
                         </li>
                     </ul>
                 </div>
-            </div><hr>
-            <div style=" height:100px;  overflow:scroll">
-                <div>
-                    <h6>나의 찜 목록</h6>
+            </div><hr>-->
+
+                    <h6>내가 쓴 게시물</h6>
                 </div>
-                <div>
-                    <ul style="list-style: none">
-                        <li>게시물 뚱땅 <button class="btn btn-outline-dark" style="width: 55px; height:25px; font-size: 5px">찜 삭제</button></li>
-                        <li>게시물 뚱땅 <button class="btn btn-outline-dark" style="width: 55px; height:25px; font-size: 5px">찜 삭제</button></li>
-                        <li>게시물 뚱땅 <button class="btn btn-outline-dark" style="width: 55px; height:25px; font-size: 5px">찜 삭제</button></li>
-                        <li>게시물 뚱땅 <button class="btn btn-outline-dark" style="width: 55px; height:25px; font-size: 5px">찜 삭제</button></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+                <section class="py-5">
+                    <div class="container px-4 px-lg-5 mt-5">
+                        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                            <th:block th:each="board, status: ${myBoard.getContent()}">
+                                <div class="col mb-5">
+                                    <div class="card h-100">
+                                        <a th:href="'/board/' + ${board.id}" style="text-decoration: none; color:black">
+                                            <!-- Product image-->
+                                            <!--<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />-->
+                                            <!-- Product details-->
+                                            <div class="card-body p-4">
+                                                <div class="text-center">
+                                                    <!-- Product name-->
+                                                    <h5 style="text-decoration: none; color:black" class="fw-bolder">[[${board.title}]]</h5>
+                                                    <!-- Product price-->
+                                                    [[${#numbers.formatCurrency(board.price)}]]
+                                                </div>
+                                            </div>
+                                            <!-- Product actions-->
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                                <div class="text-center">
+                                                    <a class="btn btn-outline-dark mt-auto" onclick="location.href='/ymarket/itemview'">👁[[${board.count}]]</a>
+                                                    <a class="btn btn-outline-dark mt-auto" href="#">❤</a>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+
+                </section>
+
     </section>
 
 
